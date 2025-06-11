@@ -1,0 +1,15 @@
+
+# NetBeans
+nbproject/private/
+build/
+dist/
+*.class
+
+# IDEs y sistema operativo
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Librerías externas (si las incluyes en libs/)
+lib/

@@ -113,7 +113,9 @@ public class ExistenciaServlet extends HttpServlet {
 
             try {
                 Existencia ex = new Existencia();
-                ex.setCodbarras(request.getParameter("codbarras"));
+                String codParam = request.getParameter("codbarras");
+                codParam = (codParam != null ? codParam.trim() : null);
+                ex.setCodbarras((codParam != null && !codParam.isEmpty()) ? codParam : null);
                 ex.setRenglon(Integer.parseInt(request.getParameter("renglon")));
                 ex.setCodinsumo(Integer.parseInt(request.getParameter("codinsumo")));
                 ex.setNombre(request.getParameter("nombre"));

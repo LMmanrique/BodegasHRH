@@ -15,6 +15,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Almacen General</title>
   <style>
+      .btn-square {
+  width: 4rem;        /* ancho fijo */
+  height: 4rem;       /* igual al alto para hacerlo cuadrado */
+  padding: 0.5rem;    /* algo de espacio alrededor del icono */
+}
+  /* 1. Anula el scroll horizontal */
+  #tablaExistenciasContainer.table-responsive {
+    overflow-x: hidden;
+  }
+
+  /* 2. Fuerza ancho completo y columnas fijas */
+  #tablaExistenciasContainer table {
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  /* 3. Envuelve texto y ajusta tamaño dinámicamente */
+  #tablaExistenciasContainer th,
+  #tablaExistenciasContainer td {
+    white-space: normal !important;
+    overflow-wrap: break-word;
+    font-size: clamp(0.75rem, 1.2vw, 1rem);
+    padding: clamp(0.3rem, 0.8vw, 0.75rem);
+  }
+
+  /* 4. Ajustes finos por breakpoint */
+  @media (max-width: 992px) {
+    #tablaExistenciasContainer th,
+    #tablaExistenciasContainer td {
+      font-size: 0.85rem;
+      padding: 0.4rem;
+    }
+  }
+  @media (max-width: 768px) {
+    #tablaExistenciasContainer th,
+    #tablaExistenciasContainer td {
+      font-size: 0.75rem;
+      padding: 0.3rem;
+    }
+  }
+      
 .destacado {
     
     color: black !important;
@@ -28,6 +69,7 @@
   <link rel="shortcut icon" type="image/png" href="${pageContext.request.contextPath}/assets/images/logos/favicon.png" />
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/styles.min.css" />
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/sweetAlert2/sweetalert2.min.css">
+  
 </head>
 
 <body>
@@ -55,9 +97,7 @@
                   <label for="codbarras" class="form-label">Código de Barras</label>
                   <input type="text" class="form-control" id="codbarras" name="codbarras" placeholder="Código de Barras">
                 </div>
-                <button type="button" class="btn btn-outline-secondary ms-3" id="btnScanBarcode">
-                  <iconify-icon icon="solar:camera-linear" width="24" height="24"></iconify-icon>
-                </button>
+                
               </div>
               
               <div class="col-md-2">
@@ -116,13 +156,12 @@
                   </button>
                 </div>
 
-                <!-- Modal para Ingreso Manual -->
                 
             </form>
             
             <!-- Tabla de Existencias -->
             <div id="tablaExistenciasContainer" class="table-responsive">
-              <table class="table table-striped table-bordered">
+               <table class="table table-striped table-bordered">
                 <thead class="table-dark">
                   <tr>
                     <th style="display:none;">ID</th>
@@ -136,32 +175,30 @@
                     <th>Código Presentación</th>
                     <th>Cantidad Actual</th>
                     <th>Precio Unitario</th>
+                    <th>Opciones</th> <!-- NUEVA COLUMNA -->
                   </tr>
                 </thead>
                 <tbody>
                   <c:forEach var="existencia" items="${listaExistencias}">
                     <tr>
                       <td style="display:none;">${existencia.id}</td>
-                    <td>
-                      <c:choose>
-                        <c:when test="${fn:startsWith(existencia.codbarras, 'BAR')}">
-                          <button type="button"
-                                  onclick="window.open('generateBarcode.jsp?code=${existencia.codbarras}', '_blank')"
-                                  style="border: none; background: none; cursor: pointer;">
-                            <div style="display: flex; flex-direction: column; align-items: center;">
-                              <!-- Opción 1: usando la notación con dos puntos -->
-                              <i class="solar:scanner-linear" style="font-size:32px;"></i>
-                              <!-- Opción 2: usando un guion, en caso de que sea la forma correcta -->
-                              <!-- <i class="solar-scanner-linear" style="font-size:32px;"></i> -->
-                              <span>${existencia.codbarras}</span>
-                            </div>
-                          </button>
-                        </c:when>
-                        <c:otherwise>
-                          ${existencia.codbarras}
-                        </c:otherwise>
-                      </c:choose>
-                    </td>
+                      <td>
+                        <c:choose>
+                          <c:when test="${fn:startsWith(existencia.codbarras, 'BAR')}">
+                            <button type="button"
+                                    onclick="window.open('generateBarcode.jsp?code=${existencia.codbarras}', '_blank')"
+                                    style="border: none; background: none; cursor: pointer;">
+                              <div style="display: flex; flex-direction: column; align-items: center;">
+                                <i class="solar:scanner-linear" style="font-size:32px;"></i>
+                                <span>${existencia.codbarras}</span>
+                              </div>
+                            </button>
+                          </c:when>
+                          <c:otherwise>
+                            ${existencia.codbarras}
+                          </c:otherwise>
+                        </c:choose>
+                      </td>
                       <td>${existencia.renglon}</td>
                       <td>${existencia.codinsumo}</td>
                       <td>${existencia.nombre}</td>
@@ -171,6 +208,17 @@
                       <td>${existencia.codpresentacion}</td>
                       <td class="destacado">${existencia.cantidad_actual}</td>
                       <td>Q${existencia.precio_unitario}</td>
+                      <td> <!-- NUEVA CELDA DE OPCIONES -->
+                          <a href="editarExistencia.jsp?id=${existencia.id}"
+                            class="btn btn-warning btn-sm btn-square
+                                   d-flex flex-column align-items-center justify-content-center">
+                           <iconify-icon
+                             icon="solar:document-add-linear"
+                             width="24" height="24">
+                           </iconify-icon>
+                           <span class="small mt-1">Editar</span>
+                         </a>
+                      </td>
                     </tr>
                   </c:forEach>
                 </tbody>
@@ -187,6 +235,7 @@
   </div>
   </div>
   </div>
+  <!-- MODAL AGREGAR INSUMO A EXISTENCIA, CON BUSQUEDA -->
     <div class="modal fade" id="consultarInsumosModal" tabindex="-1" aria-labelledby="consultarInsumosModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width: auto; max-width: 80%;">
     <div class="modal-content" style="position: relative;">
@@ -247,7 +296,7 @@
             </form>
 
             <!-- Contenedor de la Tabla de Insumos -->
-            <div id="tablaInsumosContainer" class="table-responsive">
+            
             <div id="tablaInsumosContainer" class="table-responsive">
             <table class="table table-striped table-bordered">
               <thead class="table-dark">
@@ -323,13 +372,28 @@
                       <input type="hidden" id="modal_codpresentacion" name="codpresentacion" value="">
                       <!-- Campos para cantidad y precio -->
                       <div class="mb-3 d-flex align-items-center">
+                        
                         <div class="flex-grow-1">
-                          <label for="modal_codbarras" class="form-label">Código de Barras</label>
-                          <input type="text" class="form-control" id="modal_codbarras" name="modal_codbarras" placeholder="Código de Barras">
-                        </div>
-                        <button type="button" class="btn btn-outline-secondary ms-3" id="btnScanBarcodeModal">
-                          <iconify-icon icon="solar:camera-linear" width="24" height="24"></iconify-icon>
-                        </button>
+                            <label for="modal_codbarras" class="form-label">Código de Barras</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="modal_codbarras"
+                                   name="modal_codbarras"
+                                   placeholder="Código de Barras">
+                          </div>
+
+                          <!-- Checkbox Generar Automáticamente -->
+                          <div class="form-check mt-4">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   id="autoGenerate"
+                                   name="autoGenerate">
+                            <label class="form-check-label" for="autoGenerate">
+                              Generar Automáticamente
+                            </label>
+                          </div>
+                      
+                        
                       </div>
                       <div class="mb-3">
                         <label for="cantidadExistencia" class="form-label">Cantidad en Existencias</label>
@@ -361,7 +425,8 @@
         </div>
       </div>
     </div>
-  </div>
+  
+  <!-- MODAL INGRESO DE INSUMO MANUAL -->
   <div class="modal fade" id="ingresoManualModal" tabindex="-1" aria-labelledby="ingresoManualModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" style="max-height: 80vh;">
     <div class="modal-content">
@@ -477,14 +542,30 @@
   <script src="${pageContext.request.contextPath}/assets/sweetAlert2/sweetalert2.all.min.js"></script>
   <!-- Script para limpiar el formulario principal -->
 <script>
+     document.addEventListener('change', function(e) {
+    // Si el checkbox que cambió es el nuestro...
+    if (e.target && e.target.id === 'autoGenerate') {
+      const chk = e.target;
+      const inp = document.getElementById('modal_codbarras');
+      if (!inp) return;   // si no existe aún, salimos
+
+      if (chk.checked) {
+        inp.value = '';    // vacía el campo ? lo leerás como null en el servidor
+        inp.disabled = true;
+      } else {
+        inp.disabled = false;
+        inp.focus();       // opcional: da foco para que escriban
+      }
+    }
+  });
+  
     document.addEventListener('DOMContentLoaded', function() {
       const clearBtn = document.getElementById('clearBtn');
       clearBtn.addEventListener('click', function() {
         document.getElementById('filterForm').reset();
       });
     });
-</script>
-<script>
+
   $(document).ready(function(){
     $('#filterForm').on('submit', function(e) {
       e.preventDefault(); // Evita el envío normal del formulario
@@ -515,8 +596,7 @@
       });
     });
   });
-</script>
-<script>
+
     // Limpiar formulario de filtros
     document.addEventListener('DOMContentLoaded', function() {
       const clearBtnModal = document.getElementById('clearBtnModal');
@@ -544,7 +624,7 @@ $('#guardarExistenciaBtnModal').on('click', function() {
     var precio = $('#precioUnitario').val();
     var codbarras = $('#modal_codbarras').val();
 
-    if (cantidad === "" || precio === "" || codbarras === "") {
+    if (cantidad === "" || precio === "") {
         Swal.fire('Error', 'Complete los campos obligatorios.', 'error');
         return;
     }
@@ -582,9 +662,7 @@ $('#guardarExistenciaBtnModal').on('click', function() {
     });
 });
 
-</script>
-<script>
-        $('#filterFormModal').on('submit', function(e){
+    $('#filterFormModal').on('submit', function(e){
           e.preventDefault();
           $.ajax({
             url: $(this).attr('action'),
@@ -604,8 +682,7 @@ $('#guardarExistenciaBtnModal').on('click', function() {
             }
           });
         });
-</script>
-  <script>
+
     (function () {
       'use strict';
       var forms = document.querySelectorAll('.needs-validation');
@@ -662,210 +739,7 @@ $('#guardarExistenciaBtnModal').on('click', function() {
         });
     })();
   </script>
-<script>
-  function startCameraCapture() {
-    let captureModal = document.getElementById('captureModal');
-    if (!captureModal) {
-      captureModal = document.createElement('div');
-      captureModal.id = 'captureModal';
-      captureModal.style.position = 'fixed';
-      captureModal.style.top = '0';
-      captureModal.style.left = '0';
-      captureModal.style.width = '100%';
-      captureModal.style.height = '100%';
-      captureModal.style.backgroundColor = 'rgba(0,0,0,0.8)';
-      captureModal.style.display = 'flex';
-      captureModal.style.flexDirection = 'column';
-      captureModal.style.alignItems = 'center';
-      captureModal.style.justifyContent = 'center';
-      captureModal.style.zIndex = '1050';
-      captureModal.innerHTML = `
-        <video id="videoCapture" autoplay style="width:300px; height:300px; background: #000;"></video>
-        <button id="takePhoto" class="btn btn-primary mt-3">Tomar Foto</button>
-        <button id="closeCapture" class="btn btn-danger mt-3">Cerrar</button>
-      `;
-      document.body.appendChild(captureModal);
 
-      // Botón para cerrar y detener la cámara
-      document.getElementById('closeCapture').addEventListener('click', function() {
-        let video = document.getElementById('videoCapture');
-        if (video.srcObject) {
-          video.srcObject.getTracks().forEach(track => track.stop());
-        }
-        captureModal.style.display = 'none';
-      });
-    }
-    captureModal.style.display = 'flex';
-
-    // Inicia la cámara con la opción de usar la cámara trasera (en móviles)
-    const video = document.getElementById('videoCapture');
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }})
-      .then(function(stream) {
-        video.srcObject = stream;
-        video.play();
-      })
-      .catch(function(err) {
-        console.error("Error al acceder a la cámara: ", err);
-      });
-
-    // Captura la imagen al pulsar "Tomar Foto"
-    document.getElementById('takePhoto').onclick = function(){
-      let canvas = document.createElement('canvas');
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      let ctx = canvas.getContext('2d');
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-      // Detenemos el stream de video
-      if (video.srcObject) {
-        video.srcObject.getTracks().forEach(track => track.stop());
-      }
-
-      // Convertimos la imagen capturada a formato DataURL
-      let dataUrl = canvas.toDataURL('image/png');
-
-      // Mostramos SweetAlert indicando que se está analizando el código
-      Swal.fire({
-        title: "Analizando código de barras",
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        }
-      });
-
-      // Procesamos la imagen usando Quagga.decodeSingle
-      Quagga.decodeSingle({
-        src: dataUrl,
-        numOfWorkers: 0,  // Se recomienda 0 para decodeSingle
-        inputStream: { size: 300 },
-        decoder: {
-          readers: ["code_128_reader", "ean_reader", "ean_8_reader", "upc_reader"]
-        }
-      }, function(result) {
-        Swal.close();
-        if(result && result.codeResult){
-          const code = result.codeResult.code;
-          const codbarrasInput = document.getElementById('codbarras');
-          if(codbarrasInput){
-            codbarrasInput.value = code;
-            codbarrasInput.focus();
-            // Opcional: simulamos el "Enter" si tu lógica lo requiere
-            const event = new KeyboardEvent('keypress', {
-              key: 'Enter',
-              code: 'Enter',
-              charCode: 13,
-              keyCode: 13,
-              bubbles: true,
-              cancelable: true
-            });
-            codbarrasInput.dispatchEvent(event);
-          }
-        } else {
-          Swal.fire('Error', 'No se detectó ningún código de barras', 'error');
-        }
-        captureModal.style.display = 'none';
-      });
-    };
-  }
-
-  // Asignamos la función al botón de la cámara de la página principal
-  document.getElementById('btnScanBarcode').addEventListener('click', startCameraCapture);
-</script>
-<script>
-  function startCameraCaptureModal() {
-    let captureModal = document.getElementById('captureModalModal');
-    if (!captureModal) {
-      captureModal = document.createElement('div');
-      captureModal.id = 'captureModalModal';
-      captureModal.style.position = 'fixed';
-      captureModal.style.top = '0';
-      captureModal.style.left = '0';
-      captureModal.style.width = '100%';
-      captureModal.style.height = '100%';
-      captureModal.style.backgroundColor = 'rgba(0,0,0,0.8)';
-      captureModal.style.display = 'flex';
-      captureModal.style.flexDirection = 'column';
-      captureModal.style.alignItems = 'center';
-      captureModal.style.justifyContent = 'center';
-      captureModal.style.zIndex = '1055';
-      captureModal.innerHTML = `
-        <video id="videoCaptureModal" autoplay style="width:300px; height:300px; background: #000;"></video>
-        <button id="takePhotoModal" class="btn btn-primary mt-3">Tomar Foto</button>
-        <button id="closeCaptureModal" class="btn btn-danger mt-3">Cerrar</button>
-      `;
-      document.body.appendChild(captureModal);
-
-      // Botón para cerrar y detener la cámara
-      document.getElementById('closeCaptureModal').addEventListener('click', function() {
-        let video = document.getElementById('videoCaptureModal');
-        if (video.srcObject) {
-          video.srcObject.getTracks().forEach(track => track.stop());
-        }
-        captureModal.style.display = 'none';
-      });
-    }
-    captureModal.style.display = 'flex';
-
-    // Inicia la cámara para el modal
-    const video = document.getElementById('videoCaptureModal');
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }})
-      .then(function(stream) {
-        video.srcObject = stream;
-        video.play();
-      })
-      .catch(function(err) {
-        console.error("Error al acceder a la cámara: ", err);
-      });
-
-    // Captura la foto al hacer clic en "Tomar Foto"
-    document.getElementById('takePhotoModal').onclick = function(){
-      let canvas = document.createElement('canvas');
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      let ctx = canvas.getContext('2d');
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-      if (video.srcObject) {
-        video.srcObject.getTracks().forEach(track => track.stop());
-      }
-
-      let dataUrl = canvas.toDataURL('image/png');
-
-      Swal.fire({
-        title: "Analizando código de barras",
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        }
-      });
-
-      Quagga.decodeSingle({
-        src: dataUrl,
-        numOfWorkers: 0,
-        inputStream: { size: 300 },
-        decoder: {
-          readers: ["code_128_reader", "ean_reader", "ean_8_reader", "upc_reader"]
-        }
-      }, function(result) {
-        Swal.close();
-        if(result && result.codeResult){
-          const code = result.codeResult.code;
-          const modalInput = document.getElementById('modal_codbarras');
-          if(modalInput){
-            modalInput.value = code;
-            modalInput.focus();
-          }
-        } else {
-          Swal.fire('Error', 'No se detectó ningún código de barras', 'error');
-        }
-        captureModal.style.display = 'none';
-      });
-    };
-  }
-
-  // Asignamos la función al botón de la cámara del modal
-  document.getElementById('btnScanBarcodeModal').addEventListener('click', startCameraCaptureModal);
-</script>
 </body>
 
 </html>

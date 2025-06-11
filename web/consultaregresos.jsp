@@ -77,7 +77,7 @@
           </table>
         </div>
         <div class="modal-footer">
-          <c:if test="${sessionScope.usuario.cargo == 'ADMIN'}">
+          <c:if test="${sessionScope.usuario.cargo == 'ADMIN1'}">
             <button type="button" id="btnAnularEgreso" class="btn btn-danger">
               <iconify-icon icon="solar:clipboard-remove-linear" width="30" height="30"></iconify-icon> Anular
             </button>
