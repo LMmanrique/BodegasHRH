@@ -1,5 +1,5 @@
 <%
-    // El objeto session ya est· disponible en el JSP
+    // El objeto session ya est√° disponible en el JSP
     if (session == null || session.getAttribute("usuario") == null) {
         response.sendRedirect("authentication-login.jsp");
         return;
@@ -31,7 +31,7 @@
     table-layout: fixed;
   }
 
-  /* 3. Envuelve texto y ajusta tamaÒo din·micamente */
+  /* 3. Envuelve texto y ajusta tama√±o din√°micamente */
   #tablaExistenciasContainer th,
   #tablaExistenciasContainer td {
     white-space: normal !important;
@@ -91,42 +91,42 @@
             <!-- Formulario de Filtros -->
             <form id="filterForm" class="row g-3 mb-4" method="get" action="${pageContext.request.contextPath}/ExistenciaServlet">
               <input type="hidden" name="accion" value="buscar">
-              <!-- Campo de CÛdigo de Barras y botÛn de escaneo -->
+              <!-- Campo de C√≥digo de Barras y bot√≥n de escaneo -->
                 <div class="mb-3 d-flex align-items-center">
                 <div class="flex-grow-1">
-                  <label for="codbarras" class="form-label">CÛdigo de Barras</label>
-                  <input type="text" class="form-control" id="codbarras" name="codbarras" placeholder="CÛdigo de Barras">
+                  <label for="codbarras" class="form-label">C√≥digo de Barras</label>
+                  <input type="text" class="form-control" id="codbarras" name="codbarras" placeholder="C√≥digo de Barras">
                 </div>
                 
               </div>
               
               <div class="col-md-2">
-                <label for="renglon" class="form-label">RenglÛn</label>
-                <input type="text" class="form-control" id="renglon" name="renglon" placeholder="RenglÛn">
+                <label for="renglon" class="form-label">Rengl√≥n</label>
+                <input type="text" class="form-control" id="renglon" name="renglon" placeholder="Rengl√≥n">
               </div>
               <div class="col-md-2">
-                <label for="codinsumo" class="form-label">CÛdigo Insumo</label>
-                <input type="text" class="form-control" id="codinsumo" name="codinsumo" placeholder="CÛdigo">
+                <label for="codinsumo" class="form-label">C√≥digo Insumo</label>
+                <input type="text" class="form-control" id="codinsumo" name="codinsumo" placeholder="C√≥digo">
               </div>
               <div class="col-md-2">
                 <label for="nombre" class="form-label">Nombre</label>
                 <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre">
               </div>
               <div class="col-md-2">
-                <label for="caracteristicas" class="form-label">CaracterÌsticas</label>
-                <input type="text" class="form-control" id="caracteristicas" name="caracteristicas" placeholder="CaracterÌsticas">
+                <label for="caracteristicas" class="form-label">Caracter√≠sticas</label>
+                <input type="text" class="form-control" id="caracteristicas" name="caracteristicas" placeholder="Caracter√≠sticas">
               </div>
               <div class="col-md-2">
-                <label for="npresentacion" class="form-label">Nombre PresentaciÛn</label>
-                <input type="text" class="form-control" id="npresentacion" name="npresentacion" placeholder="Nombre PresentaciÛn">
+                <label for="npresentacion" class="form-label">Nombre Presentaci√≥n</label>
+                <input type="text" class="form-control" id="npresentacion" name="npresentacion" placeholder="Nombre Presentaci√≥n">
               </div>
               <div class="col-md-2">
-                <label for="mpresentacion" class="form-label">Medida PresentaciÛn</label>
-                <input type="text" class="form-control" id="mpresentacion" name="mpresentacion" placeholder="Medida PresentaciÛn">
+                <label for="mpresentacion" class="form-label">Medida Presentaci√≥n</label>
+                <input type="text" class="form-control" id="mpresentacion" name="mpresentacion" placeholder="Medida Presentaci√≥n">
               </div>
               <div class="col-md-2">
-                <label for="codpresentacion" class="form-label">CÛdigo PresentaciÛn</label>
-                <input type="text" class="form-control" id="codpresentacion" name="codpresentacion" placeholder="CÛdigo">
+                <label for="codpresentacion" class="form-label">C√≥digo Presentaci√≥n</label>
+                <input type="text" class="form-control" id="codpresentacion" name="codpresentacion" placeholder="C√≥digo">
               </div>
                 <div class="col-12 d-flex gap-2">
                   <button type="submit" class="btn btn-primary btn-sm flex-fill">
@@ -147,7 +147,7 @@
                       <span>Agregar Insumo</span>
                     </div>
                   </button>
-                  <!-- Nuevo botÛn Ingreso Manual -->
+                  <!-- Nuevo bot√≥n Ingreso Manual -->
                   <button type="button" class="btn btn-info btn-sm flex-fill" data-bs-toggle="modal" data-bs-target="#ingresoManualModal">
                     <div class="d-flex flex-column align-items-center">
                       <iconify-icon icon="solar:box-linear" width="24" height="24" class="mb-1"></iconify-icon>
@@ -166,13 +166,13 @@
                   <tr>
                     <th style="display:none;">ID</th>
                     <th>Cod. Barras</th>
-                    <th>RenglÛn</th>
-                    <th>CÛdigo Insumo</th>
+                    <th>Rengl√≥n</th>
+                    <th>C√≥digo Insumo</th>
                     <th>Nombre</th>
-                    <th>CaracterÌsticas</th>
-                    <th>Nombre PresentaciÛn</th>
-                    <th>Medida PresentaciÛn</th>
-                    <th>CÛdigo PresentaciÛn</th>
+                    <th>Caracter√≠sticas</th>
+                    <th>Nombre Presentaci√≥n</th>
+                    <th>Medida Presentaci√≥n</th>
+                    <th>C√≥digo Presentaci√≥n</th>
                     <th>Cantidad Actual</th>
                     <th>Precio Unitario</th>
                     <th>Opciones</th> <!-- NUEVA COLUMNA -->
@@ -209,15 +209,26 @@
                       <td class="destacado">${existencia.cantidad_actual}</td>
                       <td>Q${existencia.precio_unitario}</td>
                       <td> <!-- NUEVA CELDA DE OPCIONES -->
-                          <a href="editarExistencia.jsp?id=${existencia.id}"
-                            class="btn btn-warning btn-sm btn-square
-                                   d-flex flex-column align-items-center justify-content-center">
+                          <button type="button"
+                            class="btn btn-warning btn-sm btn-square btn-detalle-existencia
+                                   d-flex flex-column align-items-center justify-content-center"
+                            data-id="${existencia.id}"
+                            data-codbarras="${existencia.codbarras}"
+                            data-renglon="${existencia.renglon}"
+                            data-codinsumo="${existencia.codinsumo}"
+                            data-nombre="${existencia.nombre}"
+                            data-caracteristicas="${existencia.caracteristicas}"
+                            data-npresentacion="${existencia.npresentacion}"
+                            data-mpresentacion="${existencia.mpresentacion}"
+                            data-codpresentacion="${existencia.codpresentacion}"
+                            data-cantidad_actual="${existencia.cantidad_actual}"
+                            data-precio_unitario="${existencia.precio_unitario}">
                            <iconify-icon
                              icon="solar:document-add-linear"
                              width="24" height="24">
                            </iconify-icon>
                            <span class="small mt-1">Editar</span>
-                         </a>
+                         </button>
                       </td>
                     </tr>
                   </c:forEach>
@@ -234,6 +245,34 @@
     </div>
   </div>
   </div>
+  </div>
+  <!-- Modal Detalle Existencia -->
+  <div class="modal fade" id="detalleExistenciaModal" tabindex="-1" aria-labelledby="detalleExistenciaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="detalleExistenciaModalLabel">Detalle del Insumo</h5>
+          <button type="button" class="btn btn-sm" data-bs-dismiss="modal" aria-label="Cerrar">
+            <iconify-icon icon="solar:close-square-linear" width="24" height="24"></iconify-icon>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Rengl√≥n:</strong> <span id="det_renglon"></span></p>
+          <p><strong>C√≥digo Insumo:</strong> <span id="det_codinsumo"></span></p>
+          <p><strong>Nombre:</strong> <span id="det_nombre"></span></p>
+          <p><strong>Caracter√≠sticas:</strong> <span id="det_caracteristicas"></span></p>
+          <p><strong>Nombre Presentaci√≥n:</strong> <span id="det_npresentacion"></span></p>
+          <p><strong>Medida Presentaci√≥n:</strong> <span id="det_mpresentacion"></span></p>
+          <p><strong>C√≥digo Presentaci√≥n:</strong> <span id="det_codpresentacion"></span></p>
+          <p><strong>Cantidad Actual:</strong> <span id="det_cantidad_actual"></span></p>
+          <p><strong>Precio Unitario:</strong> Q<span id="det_precio_unitario"></span></p>
+        </div>
+        <div class="modal-footer">
+          <a id="detalleEditarLink" href="#" class="btn btn-primary">Editar</a>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
   </div>
   <!-- MODAL AGREGAR INSUMO A EXISTENCIA, CON BUSQUEDA -->
     <div class="modal fade" id="consultarInsumosModal" tabindex="-1" aria-labelledby="consultarInsumosModalLabel" aria-hidden="true">
@@ -252,32 +291,32 @@
             <!-- Formulario de Filtros -->
             <form id="filterFormModal" class="row g-3 mb-4" method="get" action="${pageContext.request.contextPath}/ListarInsumosModalServlet">
               <div class="col-md-2">
-                <label for="renglon" class="form-label">RenglÛn</label>
-                <input type="text" class="form-control" id="renglon" name="renglon" placeholder="RenglÛn">
+                <label for="renglon" class="form-label">Rengl√≥n</label>
+                <input type="text" class="form-control" id="renglon" name="renglon" placeholder="Rengl√≥n">
               </div>
               <div class="col-md-2">
-                <label for="codinsumo" class="form-label">CÛdigo Insumo</label>
-                <input type="text" class="form-control" id="codinsumo" name="codinsumo" placeholder="CÛdigo">
+                <label for="codinsumo" class="form-label">C√≥digo Insumo</label>
+                <input type="text" class="form-control" id="codinsumo" name="codinsumo" placeholder="C√≥digo">
               </div>
               <div class="col-md-2">
                 <label for="nombre" class="form-label">Nombre</label>
                 <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre">
               </div>
               <div class="col-md-2">
-                <label for="caracteristicas" class="form-label">CaracterÌsticas</label>
-                <input type="text" class="form-control" id="caracteristicas" name="caracteristicas" placeholder="CaracterÌsticas">
+                <label for="caracteristicas" class="form-label">Caracter√≠sticas</label>
+                <input type="text" class="form-control" id="caracteristicas" name="caracteristicas" placeholder="Caracter√≠sticas">
               </div>
               <div class="col-md-2">
-                <label for="npresentacion" class="form-label">N∞ PresentaciÛn</label>
-                <input type="text" class="form-control" id="npresentacion" name="npresentacion" placeholder="N∞ PresentaciÛn">
+                <label for="npresentacion" class="form-label">N¬∞ Presentaci√≥n</label>
+                <input type="text" class="form-control" id="npresentacion" name="npresentacion" placeholder="N¬∞ Presentaci√≥n">
               </div>
               <div class="col-md-2">
-                <label for="mpresentacion" class="form-label">M PresentaciÛn</label>
-                <input type="text" class="form-control" id="mpresentacion" name="mpresentacion" placeholder="M PresentaciÛn">
+                <label for="mpresentacion" class="form-label">M Presentaci√≥n</label>
+                <input type="text" class="form-control" id="mpresentacion" name="mpresentacion" placeholder="M Presentaci√≥n">
               </div>
               <div class="col-md-2">
-                <label for="codpresentacion" class="form-label">CÛdigo PresentaciÛn</label>
-                <input type="text" class="form-control" id="codpresentacion" name="codpresentacion" placeholder="CÛdigo">
+                <label for="codpresentacion" class="form-label">C√≥digo Presentaci√≥n</label>
+                <input type="text" class="form-control" id="codpresentacion" name="codpresentacion" placeholder="C√≥digo">
               </div>
                   <div class="col-12 d-flex gap-2">
                     <button type="submit" class="btn btn-primary btn-sm flex-fill">
@@ -302,14 +341,14 @@
               <thead class="table-dark">
                 <tr>
                   <th>ID</th>
-                  <th>RenglÛn</th>
-                  <th>CÛdigo Insumo</th>
+                  <th>Rengl√≥n</th>
+                  <th>C√≥digo Insumo</th>
                   <th>Nombre</th>
-                  <th>CaracterÌsticas</th>
-                  <th>N∞ PresentaciÛn</th>
-                  <th>M PresentaciÛn</th>
-                  <th>CÛdigo PresentaciÛn</th>
-                  <th>AcciÛn</th>
+                  <th>Caracter√≠sticas</th>
+                  <th>N¬∞ Presentaci√≥n</th>
+                  <th>M Presentaci√≥n</th>
+                  <th>C√≥digo Presentaci√≥n</th>
+                  <th>Acci√≥n</th>
                 </tr>
               </thead>
               <tbody>
@@ -374,22 +413,22 @@
                       <div class="mb-3 d-flex align-items-center">
                         
                         <div class="flex-grow-1">
-                            <label for="modal_codbarras" class="form-label">CÛdigo de Barras</label>
+                            <label for="modal_codbarras" class="form-label">C√≥digo de Barras</label>
                             <input type="text"
                                    class="form-control"
                                    id="modal_codbarras"
                                    name="modal_codbarras"
-                                   placeholder="CÛdigo de Barras">
+                                   placeholder="C√≥digo de Barras">
                           </div>
 
-                          <!-- Checkbox Generar Autom·ticamente -->
+                          <!-- Checkbox Generar Autom√°ticamente -->
                           <div class="form-check mt-4">
                             <input class="form-check-input"
                                    type="checkbox"
                                    id="autoGenerate"
                                    name="autoGenerate">
                             <label class="form-check-label" for="autoGenerate">
-                              Generar Autom·ticamente
+                              Generar Autom√°ticamente
                             </label>
                           </div>
                       
@@ -437,23 +476,23 @@
       <div class="modal-body">
          <form id="formAgregarInsumoManual" class="needs-validation" novalidate action="${pageContext.request.contextPath}/ExistenciaServlet" method="post">
             <input type="hidden" name="accion" value="insertar">
-            <!-- RenglÛn -->
+            <!-- Rengl√≥n -->
             <div class="mb-3">
-              <label for="renglon" class="form-label">RenglÛn</label>
+              <label for="renglon" class="form-label">Rengl√≥n</label>
               <input type="number" class="form-control" id="renglon" name="renglon" required step="1"
                      oninput="this.value = this.value.replace(/[^0-9]/g, '');">
               <div class="invalid-feedback">
-                Por favor ingrese el renglÛn (n˙mero entero).
+                Por favor ingrese el rengl√≥n (n√∫mero entero).
               </div>
             </div>
 
-            <!-- CÛdigo de Insumo -->
+            <!-- C√≥digo de Insumo -->
             <div class="mb-3">
-              <label for="codinsumo" class="form-label">CÛdigo Insumo</label>
+              <label for="codinsumo" class="form-label">C√≥digo Insumo</label>
               <input type="number" class="form-control" id="codinsumo" name="codinsumo" required step="1"
                      oninput="this.value = this.value.replace(/[^0-9]/g, '');">
               <div class="invalid-feedback">
-                Por favor ingrese el cÛdigo del insumo.
+                Por favor ingrese el c√≥digo del insumo.
               </div>
             </div>
 
@@ -466,40 +505,40 @@
               </div>
             </div>
 
-            <!-- CaracterÌsticas -->
+            <!-- Caracter√≠sticas -->
             <div class="mb-3">
-              <label for="caracteristicas" class="form-label">CaracterÌsticas</label>
+              <label for="caracteristicas" class="form-label">Caracter√≠sticas</label>
               <textarea class="form-control" id="caracteristicas" name="caracteristicas" rows="3" maxlength="5000" required></textarea>
               <div class="invalid-feedback">
-                Por favor ingrese las caracterÌsticas.
+                Por favor ingrese las caracter√≠sticas.
               </div>
             </div>
 
-            <!-- Nombre PresentaciÛn -->
+            <!-- Nombre Presentaci√≥n -->
             <div class="mb-3">
-              <label for="npresentacion" class="form-label">Nombre PresentaciÛn</label>
+              <label for="npresentacion" class="form-label">Nombre Presentaci√≥n</label>
               <textarea class="form-control" id="npresentacion" name="npresentacion" rows="2" maxlength="5000" required></textarea>
               <div class="invalid-feedback">
-                Por favor ingrese el nombre de presentaciÛn.
+                Por favor ingrese el nombre de presentaci√≥n.
               </div>
             </div>
 
-            <!-- Medida PresentaciÛn -->
+            <!-- Medida Presentaci√≥n -->
             <div class="mb-3">
-              <label for="mpresentacion" class="form-label">Medida PresentaciÛn</label>
+              <label for="mpresentacion" class="form-label">Medida Presentaci√≥n</label>
               <input type="text" class="form-control" id="mpresentacion" name="mpresentacion" maxlength="255" required>
               <div class="invalid-feedback">
-                Por favor ingrese la medida de presentaciÛn.
+                Por favor ingrese la medida de presentaci√≥n.
               </div>
             </div>
 
-            <!-- CÛdigo PresentaciÛn -->
+            <!-- C√≥digo Presentaci√≥n -->
             <div class="mb-3">
-              <label for="codpresentacion" class="form-label">CÛdigo PresentaciÛn</label>
+              <label for="codpresentacion" class="form-label">C√≥digo Presentaci√≥n</label>
               <input type="number" class="form-control" id="codpresentacion" name="codpresentacion" required step="1"
                      oninput="this.value = this.value.replace(/[^0-9]/g, '');">
               <div class="invalid-feedback">
-                Por favor ingrese el cÛdigo de presentaciÛn.
+                Por favor ingrese el c√≥digo de presentaci√≥n.
               </div>
             </div>
 
@@ -521,7 +560,7 @@
               </div>
             </div>
 
-            <!-- BotÛn de envÌo -->
+            <!-- Bot√≥n de env√≠o -->
             <button type="submit" class="btn btn-primary">Guardar Insumo</button>
           </form>
 
@@ -543,14 +582,14 @@
   <!-- Script para limpiar el formulario principal -->
 <script>
      document.addEventListener('change', function(e) {
-    // Si el checkbox que cambiÛ es el nuestro...
+    // Si el checkbox que cambi√≥ es el nuestro...
     if (e.target && e.target.id === 'autoGenerate') {
       const chk = e.target;
       const inp = document.getElementById('modal_codbarras');
-      if (!inp) return;   // si no existe a˙n, salimos
+      if (!inp) return;   // si no existe a√∫n, salimos
 
       if (chk.checked) {
-        inp.value = '';    // vacÌa el campo ? lo leer·s como null en el servidor
+        inp.value = '';    // vac√≠a el campo ? lo leer√°s como null en el servidor
         inp.disabled = true;
       } else {
         inp.disabled = false;
@@ -568,7 +607,7 @@
 
   $(document).ready(function(){
     $('#filterForm').on('submit', function(e) {
-      e.preventDefault(); // Evita el envÌo normal del formulario
+      e.preventDefault(); // Evita el env√≠o normal del formulario
       $.ajax({
         url: $(this).attr('action'),
         type: 'GET',
@@ -586,7 +625,7 @@
             if(nuevoTbody){
               $('#tablaExistenciasContainer tbody').html(nuevoTbody);
             } else {
-              console.error("No se encontrÛ el tbody en la respuesta AJAX.");
+              console.error("No se encontr√≥ el tbody en la respuesta AJAX.");
             }
           }
         },
@@ -604,21 +643,37 @@
         document.getElementById('filterFormModal').reset();
       });
     });
-     // DelegaciÛn para el botÛn "Agregar a Existencias" en la tabla
-    $(document).on('click', '.agregarExistenciaBtnModal', function() {
-      $('#insumoId').val($(this).attr('data-id'));
-      $('#modal_renglon').val($(this).attr('data-renglon'));
-      $('#modal_codinsumo').val($(this).attr('data-codinsumo'));
-      $('#modal_nombre').val($(this).attr('data-nombre'));
-      $('#modal_caracteristicas').val($(this).attr('data-caracteristicas'));
-      $('#modal_npresentacion').val($(this).attr('data-npresentacion'));
-      $('#modal_mpresentacion').val($(this).attr('data-mpresentacion'));
-      $('#modal_codpresentacion').val($(this).attr('data-codpresentacion'));
-      $('#modalAgregarExistenciaLabel').text("Agregar a Existencias - " + $(this).attr('data-nombre'));
-      $('#modalAgregarExistencia').modal('show');
-    });
+     // Delegaci√≥n para el bot√≥n "Agregar a Existencias" en la tabla
+  $(document).on('click', '.agregarExistenciaBtnModal', function() {
+    $('#insumoId').val($(this).attr('data-id'));
+    $('#modal_renglon').val($(this).attr('data-renglon'));
+    $('#modal_codinsumo').val($(this).attr('data-codinsumo'));
+    $('#modal_nombre').val($(this).attr('data-nombre'));
+    $('#modal_caracteristicas').val($(this).attr('data-caracteristicas'));
+    $('#modal_npresentacion').val($(this).attr('data-npresentacion'));
+    $('#modal_mpresentacion').val($(this).attr('data-mpresentacion'));
+    $('#modal_codpresentacion').val($(this).attr('data-codpresentacion'));
+    $('#modalAgregarExistenciaLabel').text("Agregar a Existencias - " + $(this).attr('data-nombre'));
+    $('#modalAgregarExistencia').modal('show');
+  });
+
+  // Mostrar detalles de la existencia en un modal
+  $(document).on('click', '.btn-detalle-existencia', function() {
+    $('#det_renglon').text($(this).data('renglon'));
+    $('#det_codinsumo').text($(this).data('codinsumo'));
+    $('#det_nombre').text($(this).data('nombre'));
+    $('#det_caracteristicas').text($(this).data('caracteristicas'));
+    $('#det_npresentacion').text($(this).data('npresentacion'));
+    $('#det_mpresentacion').text($(this).data('mpresentacion'));
+    $('#det_codpresentacion').text($(this).data('codpresentacion'));
+    $('#det_cantidad_actual').text($(this).data('cantidad_actual'));
+    $('#det_precio_unitario').text($(this).data('precio_unitario'));
+    $('#detalleEditarLink').attr('href', 'editarExistencia.jsp?id=' + $(this).data('id'));
+    var modal = new bootstrap.Modal(document.getElementById('detalleExistenciaModal'));
+    modal.show();
+  });
     
-// Manejo del botÛn "Guardar" en el modal
+// Manejo del bot√≥n "Guardar" en el modal
 $('#guardarExistenciaBtnModal').on('click', function() {
     var cantidad = $('#cantidadExistencia').val();
     var precio = $('#precioUnitario').val();
@@ -632,11 +687,11 @@ $('#guardarExistenciaBtnModal').on('click', function() {
     var formData = $('#agregarExistenciaForm').serialize() + '&codbarras=' + encodeURIComponent(codbarras);
 
     Swal.fire({
-        title: 'øEst· seguro?',
-        text: "øDesea agregar este insumo a existencias con cantidad " + cantidad + " y precio unitario " + precio + "?",
+        title: '¬øEst√° seguro?',
+        text: "¬øDesea agregar este insumo a existencias con cantidad " + cantidad + " y precio unitario " + precio + "?",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'SÌ, guardar',
+        confirmButtonText: 'S√≠, guardar',
         cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
@@ -674,7 +729,7 @@ $('#guardarExistenciaBtnModal').on('click', function() {
               if(nuevoTbodyModal){
                 $('#tablaInsumosContainer tbody').html(nuevoTbodyModal);
               } else {
-                console.error("No se encontrÛ el tbody en la respuesta AJAX.");
+                console.error("No se encontr√≥ el tbody en la respuesta AJAX.");
               }
             },
             error: function(xhr, status, error){
@@ -698,7 +753,7 @@ $('#guardarExistenciaBtnModal').on('click', function() {
               return;
             }
 
-            // Mostrar SweetAlert indicando que se est·n guardando los datos
+            // Mostrar SweetAlert indicando que se est√°n guardando los datos
             Swal.fire({
               title: 'Guardando datos',
               allowOutsideClick: false,
@@ -713,9 +768,9 @@ $('#guardarExistenciaBtnModal').on('click', function() {
               type: form.method,
               data: $(form).serialize(),
               success: function(response) {
-                // Cerrar el modal (aseg˙rate de que el id coincida con el de tu modal)
+                // Cerrar el modal (aseg√∫rate de que el id coincida con el de tu modal)
                 $('#ingresoManualModal').modal('hide');
-                // Mostrar mensaje de Èxito y recargar la p·gina
+                // Mostrar mensaje de √©xito y recargar la p√°gina
                 Swal.fire({
                   icon: 'success',
                   title: 'Insumo guardado',
@@ -729,7 +784,7 @@ $('#guardarExistenciaBtnModal').on('click', function() {
                 Swal.fire({
                   icon: 'error',
                   title: 'Error',
-                  text: 'No se pudo guardar el insumo. IntÈntalo de nuevo.'
+                  text: 'No se pudo guardar el insumo. Int√©ntalo de nuevo.'
                 });
               }
             });
