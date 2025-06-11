@@ -128,73 +128,107 @@ public class DaoExistencia {
         return result;
     }
     
-    public List<Existencia> buscarExistencias(String codbarras, String renglon, String codinsumo, String nombre, String caracteristicas,
-                                          String npresentacion, String mpresentacion, String codpresentacion) {
-    List<Existencia> lista = new ArrayList<>();
-    String sql = "SELECT * FROM existencias WHERE 1=1";
-    List<Object> parametros = new ArrayList<>();
-    if (codbarras != null && !codbarras.trim().isEmpty()) {
-        sql += " AND codbarras LIKE ?";
-        parametros.add("%" + codbarras + "%");
-    }
-    if (renglon != null && !renglon.trim().isEmpty()) {
-        sql += " AND renglon = ?";
-        parametros.add(Integer.parseInt(renglon));
-    }
-    if (codinsumo != null && !codinsumo.trim().isEmpty()) {
-        sql += " AND codinsumo = ?";
-        parametros.add(Integer.parseInt(codinsumo));
-    }
-    if (nombre != null && !nombre.trim().isEmpty()) {
-        sql += " AND nombre LIKE ?";
-        parametros.add("%" + nombre + "%");
-    }
-    if (caracteristicas != null && !caracteristicas.trim().isEmpty()) {
-        sql += " AND caracteristicas LIKE ?";
-        parametros.add("%" + caracteristicas + "%");
-    }
-    if (npresentacion != null && !npresentacion.trim().isEmpty()) {
-        sql += " AND npresentacion LIKE ?";
-        parametros.add("%" + npresentacion + "%");
-    }
-    if (mpresentacion != null && !mpresentacion.trim().isEmpty()) {
-        sql += " AND mpresentacion LIKE ?";
-        parametros.add("%" + mpresentacion + "%");
-    }
-    if (codpresentacion != null && !codpresentacion.trim().isEmpty()) {
-        sql += " AND codpresentacion = ?";
-        parametros.add(Integer.parseInt(codpresentacion));
-    }
-    
-    sql += " ORDER BY timestamp DESC LIMIT 1000";
-    
-    try (Connection cn = new conexion().conectar();
-         PreparedStatement ps = cn.prepareStatement(sql)) {
-        
-        // Asignar parámetros dinámicos
-        for (int i = 0; i < parametros.size(); i++) {
-            ps.setObject(i + 1, parametros.get(i));
+public List<Existencia> buscarExistencias(
+            String codbarras,
+            String renglon,
+            String codinsumo,
+            String nombre,
+            String caracteristicas,
+            String npresentacion,
+            String mpresentacion,
+            String codpresentacion) {
+
+        List<Existencia> lista = new ArrayList<>();
+
+        // 1) Construcción del SQL con LEFT JOIN para incluir existencia_codigos
+        String sql =
+            "SELECT " +
+            "  e.id, " +
+            "  COALESCE(e.codbarras, ec.codigo_barras) AS codbarras, " +
+            "  e.renglon, " +
+            "  e.codinsumo, " +
+            "  e.nombre, " +
+            "  e.caracteristicas, " +
+            "  e.npresentacion, " +
+            "  e.mpresentacion, " +
+            "  e.codpresentacion, " +
+            "  e.cantidad_actual, " +
+            "  e.precio_unitario " +
+            "FROM existencias e " +
+            "LEFT JOIN existencia_codigos ec ON ec.existencia_id = e.id " +
+            "WHERE 1=1";
+
+        List<Object> parametros = new ArrayList<>();
+
+        // 2) Filtros dinámicos
+        if (codbarras != null && !codbarras.trim().isEmpty()) {
+            sql += " AND ( e.codbarras LIKE ? OR ec.codigo_barras LIKE ? )";
+            String patron = "%" + codbarras.trim() + "%";
+            parametros.add(patron);
+            parametros.add(patron);
         }
-        
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            Existencia ex = new Existencia();
-            ex.setId(rs.getInt("id"));
-            ex.setCodbarras(rs.getString("codbarras"));
-            ex.setRenglon(rs.getInt("renglon"));
-            ex.setCodinsumo(rs.getInt("codinsumo"));
-            ex.setNombre(rs.getString("nombre"));
-            ex.setCaracteristicas(rs.getString("caracteristicas"));
-            ex.setNpresentacion(rs.getString("npresentacion"));
-            ex.setMpresentacion(rs.getString("mpresentacion"));
-            ex.setCodpresentacion(rs.getInt("codpresentacion"));
-            ex.setCantidad_actual(rs.getDouble("cantidad_actual"));
-            ex.setPrecio_unitario(rs.getDouble("precio_unitario"));
-            lista.add(ex);
+        if (renglon != null && !renglon.trim().isEmpty()) {
+            sql += " AND e.renglon = ?";
+            parametros.add(Integer.parseInt(renglon.trim()));
         }
-    } catch (SQLException e) {
-        System.out.println("Error en DaoExistencia.buscarExistencias: " + e.getMessage());
+        if (codinsumo != null && !codinsumo.trim().isEmpty()) {
+            sql += " AND e.codinsumo = ?";
+            parametros.add(Integer.parseInt(codinsumo.trim()));
+        }
+        if (nombre != null && !nombre.trim().isEmpty()) {
+            sql += " AND e.nombre LIKE ?";
+            parametros.add("%" + nombre.trim() + "%");
+        }
+        if (caracteristicas != null && !caracteristicas.trim().isEmpty()) {
+            sql += " AND e.caracteristicas LIKE ?";
+            parametros.add("%" + caracteristicas.trim() + "%");
+        }
+        if (npresentacion != null && !npresentacion.trim().isEmpty()) {
+            sql += " AND e.npresentacion LIKE ?";
+            parametros.add("%" + npresentacion.trim() + "%");
+        }
+        if (mpresentacion != null && !mpresentacion.trim().isEmpty()) {
+            sql += " AND e.mpresentacion LIKE ?";
+            parametros.add("%" + mpresentacion.trim() + "%");
+        }
+        if (codpresentacion != null && !codpresentacion.trim().isEmpty()) {
+            sql += " AND e.codpresentacion = ?";
+            parametros.add(Integer.parseInt(codpresentacion.trim()));
+        }
+
+        // 3) Orden y límite
+        sql += " ORDER BY e.timestamp DESC LIMIT 1000";
+
+        // 4) Ejecución y mapeo
+        try (
+            Connection cn = new conexion().conectar();
+            PreparedStatement ps = cn.prepareStatement(sql)
+        ) {
+            // Asignar parámetros
+            for (int i = 0; i < parametros.size(); i++) {
+                ps.setObject(i + 1, parametros.get(i));
+            }
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Existencia ex = new Existencia();
+                ex.setId(rs.getInt("id"));
+                ex.setCodbarras(rs.getString("codbarras"));
+                ex.setRenglon(rs.getInt("renglon"));
+                ex.setCodinsumo(rs.getInt("codinsumo"));
+                ex.setNombre(rs.getString("nombre"));
+                ex.setCaracteristicas(rs.getString("caracteristicas"));
+                ex.setNpresentacion(rs.getString("npresentacion"));
+                ex.setMpresentacion(rs.getString("mpresentacion"));
+                ex.setCodpresentacion(rs.getInt("codpresentacion"));
+                ex.setCantidad_actual(rs.getDouble("cantidad_actual"));
+                ex.setPrecio_unitario(rs.getDouble("precio_unitario"));
+                lista.add(ex);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error en DaoExistencia.buscarExistencias: " + e.getMessage());
+        }
+
+        return lista;
     }
-    return lista;
-}
 }
