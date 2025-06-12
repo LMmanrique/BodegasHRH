@@ -1,7 +1,7 @@
 
 
 <%
-    // El objeto session ya est· disponible en el JSP
+    // El objeto session ya est√° disponible en el JSP
     if (session == null || session.getAttribute("usuario") == null) {
         response.sendRedirect("authentication-login.jsp");
         return;
@@ -71,7 +71,7 @@
                 </select>
               </div>
               <div class="col-md-6 mb-3">
-                <label for="proveedor" class="form-label">No. RequisiciÛn<span class="text-danger">*</span></label>
+                <label for="proveedor" class="form-label">No. Requisici√≥n<span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="proveedor" name="proveedor" required>
               </div>
               <div class="col-md-6 mb-3">
@@ -81,72 +81,72 @@
               <select class="form-select" id="servicio_devuelve" name="servicio_devuelve" required>
                 
                 <option value="activos fijos e inventario">Activos Fijos e Inventario</option>
-                <option value="asesorÌa jurÌdica">AsesorÌa JurÌdica</option>
+                <option value="asesor√≠a jur√≠dica">Asesor√≠a Jur√≠dica</option>
                 <option value="banco de leche">Banco de Leche</option>
                 <option value="banco de sangre">Banco de Sangre</option>
-                <option value="bodega de material mÈdico-quir˙rgico">Bodega de Material MÈdico-Quir˙rgico</option>
+                <option value="bodega de material m√©dico-quir√∫rgico">Bodega de Material M√©dico-Quir√∫rgico</option>
                 <option value="bodega de medicamento">Bodega de Medicamento</option>
                 <option value="central de equipos">Central de Equipos</option>
-                <option value="centro de recuperaciÛn nutricional">Centro de RecuperaciÛn Nutricional</option>
-                <option value="cirugÌa de hombres">CirugÌa de Hombres</option>
-                <option value="cirugÌa de mujeres">CirugÌa de Mujeres</option>
-                <option value="clÌnica de vsvs">ClÌnica de VSVS</option>
+                <option value="centro de recuperaci√≥n nutricional">Centro de Recuperaci√≥n Nutricional</option>
+                <option value="cirug√≠a de hombres">Cirug√≠a de Hombres</option>
+                <option value="cirug√≠a de mujeres">Cirug√≠a de Mujeres</option>
+                <option value="cl√≠nica de vsvs">Cl√≠nica de VSVS</option>
                 <option value="cocina">Cocina</option>
                 <option value="compras">Compras</option>
                 <option value="consulta externa">Consulta Externa</option>
                 <option value="contabilidad">Contabilidad</option>
-                <option value="costurerÌa">CosturerÌa</option>
-                <option value="direcciÛn ejecutiva">DirecciÛn Ejecutiva</option>
+                <option value="costurer√≠a">Costurer√≠a</option>
+                <option value="direcci√≥n ejecutiva">Direcci√≥n Ejecutiva</option>
                 <option value="emergencia general">Emergencia General</option>
                 <option value="emergencia materno-neonatal">Emergencia Materno-Neonatal</option>
-                <option value="epidemiologÌa">EpidemiologÌa</option>
+                <option value="epidemiolog√≠a">Epidemiolog√≠a</option>
                 <option value="farmacia estatal">Farmacia Estatal</option>
                 <option value="farmacia interna">Farmacia Interna</option>
                 <option value="gerencia administrativa">Gerencia Administrativa</option>
-                <option value="ginecologÌa">GinecologÌa</option>
-                <option value="hemodi·lisis">Hemodi·lisis</option>
-                <option value="infectologÌa">InfectologÌa</option>
-                <option value="inform·tica">Inform·tica</option>
+                <option value="ginecolog√≠a">Ginecolog√≠a</option>
+                <option value="hemodi√°lisis">Hemodi√°lisis</option>
+                <option value="infectolog√≠a">Infectolog√≠a</option>
+                <option value="inform√°tica">Inform√°tica</option>
                 <option value="intendencia">Intendencia</option>
                 <option value="labor y partos">Labor y Partos</option>
                 <option value="laboratorio">Laboratorio</option>
                 <option value="lactario">Lactario</option>
-                <option value="lavanderÌa">LavanderÌa</option>
+                <option value="lavander√≠a">Lavander√≠a</option>
                 <option value="mantenimiento">Mantenimiento</option>
                 <option value="maternidad">Maternidad</option>
                 <option value="medicina de hombres">Medicina de Hombres</option>
                 <option value="medicina de mujeres">Medicina de Mujeres</option>
-                <option value="medicina fÌsica y fisioterapia">Medicina FÌsica y Fisioterapia</option>
-                <option value="neonatologÌa">NeonatologÌa</option>
-                <option value="neumologÌa">NeumologÌa</option>
-                <option value="nutriciÛn">NutriciÛn</option>
-                <option value="patologÌa">PatologÌa</option>
-                <option value="pediatrÌa">PediatrÌa</option>
-                <option value="planificaciÛn familiar">PlanificaciÛn Familiar</option>
+                <option value="medicina f√≠sica y fisioterapia">Medicina F√≠sica y Fisioterapia</option>
+                <option value="neonatolog√≠a">Neonatolog√≠a</option>
+                <option value="neumolog√≠a">Neumolog√≠a</option>
+                <option value="nutrici√≥n">Nutrici√≥n</option>
+                <option value="patolog√≠a">Patolog√≠a</option>
+                <option value="pediatr√≠a">Pediatr√≠a</option>
+                <option value="planificaci√≥n familiar">Planificaci√≥n Familiar</option>
                 <option value="presupuestos">Presupuestos</option>
                 <option value="productos afines">Productos Afines</option>
                 <option value="programa canguro">Programa Canguro</option>
-                <option value="psicologÌa">PsicologÌa</option>
+                <option value="psicolog√≠a">Psicolog√≠a</option>
                 <option value="rayos x">Rayos X</option>
-                <option value="registros mÈdicos">Registros MÈdicos</option>
+                <option value="registros m√©dicos">Registros M√©dicos</option>
                 <option value="resguardo y vigilancia">Resguardo y Vigilancia</option>
                 <option value="sala de operaciones general">Sala de Operaciones General</option>
                 <option value="sala de operaciones materno-neonatal">Sala de Operaciones Materno-Neonatal</option>
-                <option value="subdirecciÛn de enfermerÌa">SubdirecciÛn de EnfermerÌa</option>
-                <option value="subdirecciÛn de recursos humanos">SubdirecciÛn de Recursos Humanos</option>
-                <option value="subdirecciÛn mÈdica">SubdirecciÛn MÈdica</option>
-                <option value="subdirecciÛn tÈcnica">SubdirecciÛn TÈcnica</option>
+                <option value="subdirecci√≥n de enfermer√≠a">Subdirecci√≥n de Enfermer√≠a</option>
+                <option value="subdirecci√≥n de recursos humanos">Subdirecci√≥n de Recursos Humanos</option>
+                <option value="subdirecci√≥n m√©dica">Subdirecci√≥n M√©dica</option>
+                <option value="subdirecci√≥n t√©cnica">Subdirecci√≥n T√©cnica</option>
                 <option value="sueldos y salarios">Sueldos y Salarios</option>
-                <option value="tesorerÌa">TesorerÌa</option>
+                <option value="tesorer√≠a">Tesorer√≠a</option>
                 <option value="trabajo social">Trabajo Social</option>
                 <option value="transporte">Transporte</option>
-                <option value="unidad de atenciÛn integral">Unidad de AtenciÛn Integral</option>
+                <option value="unidad de atenci√≥n integral">Unidad de Atenci√≥n Integral</option>
                 <option value="unidad de cuidados intensivos adultos a">Unidad de Cuidados Intensivos Adultos A</option>
                 <option value="unidad de cuidados intensivos adultos b">Unidad de Cuidados Intensivos Adultos B</option>
                 <option value="unidad de cuidados intensivos neonatos">Unidad de Cuidados Intensivos Neonatos</option>
-                <option value="unidad de cuidados intensivos pedi·tricos">Unidad de Cuidados Intensivos Pedi·tricos</option>
-                <option value="unidad de informaciÛn en salud y atenciÛn al usuario">
-                  Unidad de InformaciÛn en Salud y AtenciÛn al Usuario
+                <option value="unidad de cuidados intensivos pedi√°tricos">Unidad de Cuidados Intensivos Pedi√°tricos</option>
+                <option value="unidad de informaci√≥n en salud y atenci√≥n al usuario">
+                  Unidad de Informaci√≥n en Salud y Atenci√≥n al Usuario
                 </option>
                 <option value="upe">Upe</option>
               </select>
@@ -179,14 +179,14 @@
             </div>
                 <div class="card-body">
                   <div class="d-flex gap-3 mb-3">
-                    <!-- BotÛn para agregar manualmente -->
+                    <!-- Bot√≥n para agregar manualmente -->
                     <button  type="button" class="btn btn-success d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#consultarInsumosModal">
                       <iconify-icon icon="solar:clipboard-add-linear" width="20" height="20"></iconify-icon>
                       Agregar Insumo
                     </button>
 
-                    <!-- Campo para escanear cÛdigo de barras -->
-                    <input type="text" id="codbarras" class="form-control w-auto" placeholder="CÛdigo" autocomplete="off">
+                    <!-- Campo para escanear c√≥digo de barras -->
+                    <input type="text" id="codbarras" class="form-control w-auto" placeholder="C√≥digo" autocomplete="off">
                   </div>
 
                   <table id="detalleTable" class="table table-bordered">
@@ -194,7 +194,7 @@
                       <tr>
                         <th>ID</th>
                         <th>Insumo</th>
-                        <th>CaracterÌsticas</th>
+                        <th>Caracter√≠sticas</th>
                         <th>Existencia Total</th>
                         <th>Fecha de Vencimiento / Lote / Cantidad</th>
                         <th>Cantidad a despachar</th>
@@ -204,7 +204,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <!-- Se agregan aquÌ las filas -->
+                      <!-- Se agregan aqu√≠ las filas -->
                     </tbody>
                   </table>
                   <div class="d-flex justify-content-end mt-2">
@@ -225,7 +225,7 @@
     <div class="modal fade" id="consultarInsumosModal" tabindex="-1" aria-labelledby="consultarExistenciaModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width: auto; max-width: 80%;">
     <div class="modal-content">
-      <!-- Modal Header con botÛn de cierre -->
+      <!-- Modal Header con bot√≥n de cierre -->
       <div class="modal-header">
         <h1 class="modal-title" id="consultarExistenciaModalLabel">Listado de Existencias</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
@@ -236,32 +236,32 @@
         <form id="filterForm" class="row g-3 mb-4" method="get" action="${pageContext.request.contextPath}/ExistenciaServlet">
           <input type="hidden" name="accion" value="buscarmodal">
           <div class="col-md-2">
-            <label for="renglon" class="form-label">RenglÛn</label>
-            <input type="text" class="form-control" id="renglon" name="renglon" placeholder="RenglÛn">
+            <label for="renglon" class="form-label">Rengl√≥n</label>
+            <input type="text" class="form-control" id="renglon" name="renglon" placeholder="Rengl√≥n">
           </div>
           <div class="col-md-2">
-            <label for="codinsumo" class="form-label">CÛdigo Insumo</label>
-            <input type="text" class="form-control" id="codinsumo" name="codinsumo" placeholder="CÛdigo">
+            <label for="codinsumo" class="form-label">C√≥digo Insumo</label>
+            <input type="text" class="form-control" id="codinsumo" name="codinsumo" placeholder="C√≥digo">
           </div>
           <div class="col-md-2">
             <label for="nombre" class="form-label">Nombre</label>
             <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre">
           </div>
           <div class="col-md-2">
-            <label for="caracteristicas" class="form-label">CaracterÌsticas</label>
-            <input type="text" class="form-control" id="caracteristicas" name="caracteristicas" placeholder="CaracterÌsticas">
+            <label for="caracteristicas" class="form-label">Caracter√≠sticas</label>
+            <input type="text" class="form-control" id="caracteristicas" name="caracteristicas" placeholder="Caracter√≠sticas">
           </div>
           <div class="col-md-2">
-            <label for="npresentacion" class="form-label">Nombre PresentaciÛn</label>
-            <input type="text" class="form-control" id="npresentacion" name="npresentacion" placeholder="Nombre PresentaciÛn">
+            <label for="npresentacion" class="form-label">Nombre Presentaci√≥n</label>
+            <input type="text" class="form-control" id="npresentacion" name="npresentacion" placeholder="Nombre Presentaci√≥n">
           </div>
           <div class="col-md-2">
-            <label for="mpresentacion" class="form-label">Medida PresentaciÛn</label>
-            <input type="text" class="form-control" id="mpresentacion" name="mpresentacion" placeholder="Medida PresentaciÛn">
+            <label for="mpresentacion" class="form-label">Medida Presentaci√≥n</label>
+            <input type="text" class="form-control" id="mpresentacion" name="mpresentacion" placeholder="Medida Presentaci√≥n">
           </div>
           <div class="col-md-2">
-            <label for="codpresentacion" class="form-label">CÛdigo PresentaciÛn</label>
-            <input type="text" class="form-control" id="codpresentacion" name="codpresentacion" placeholder="CÛdigo">
+            <label for="codpresentacion" class="form-label">C√≥digo Presentaci√≥n</label>
+            <input type="text" class="form-control" id="codpresentacion" name="codpresentacion" placeholder="C√≥digo">
           </div>
           <div class="col-12 d-flex gap-2">
             <button type="submit" class="btn btn-primary btn-sm flex-fill">
@@ -285,13 +285,13 @@
             <thead class="table-dark">
               <tr>
                 <th style="display:none;">ID</th>
-                <th>RenglÛn</th>
-                <th>CÛdigo Insumo</th>
+                <th>Rengl√≥n</th>
+                <th>C√≥digo Insumo</th>
                 <th>Nombre</th>
-                <th>CaracterÌsticas</th>
-                <th>Nombre PresentaciÛn</th>
-                <th>Medida PresentaciÛn</th>
-                <th>CÛdigo Barras</th>
+                <th>Caracter√≠sticas</th>
+                <th>Nombre Presentaci√≥n</th>
+                <th>Medida Presentaci√≥n</th>
+                <th>C√≥digo Barras</th>
                 <th>Acciones</th>
               </tr>
             </thead>
@@ -351,6 +351,8 @@
 $(function(){
   var base = '<%= request.getContextPath() %>';
 
+  var $form = $("#formEgresos");
+  var $btnGuardar = $("#btnGuardarDatos");
   // 1) Filtrar en el modal de existencias
   $('#filterForm').on('submit', function(e){
     e.preventDefault();
@@ -362,7 +364,7 @@ $(function(){
         $('#tablaExistenciasContainer').html(response);
       },
       error: function(xhr, status, error){
-        console.error('Error en la b˙squeda:', error);
+        console.error('Error en la b√∫squeda:', error);
       }
     });
   });
@@ -383,7 +385,7 @@ $(function(){
     $('#consultarInsumosModal').modal('hide');
   });
 
-  // 3) Escanear o ingresar manual cÛdigo
+  // 3) Escanear o ingresar manual c√≥digo
   $('#codbarras').focus().on('keydown', function(e){
     if (e.which === 13) {
       e.preventDefault();
@@ -411,7 +413,7 @@ $(function(){
     });
   }
 
-  // 4) AÒadir fila con validaciÛn de cantidad
+  // 4) A√±adir fila con validaci√≥n de cantidad
   window.addDetalleRow = function(item){
     var $tr = $('<tr>');
     $tr.append('<td>' + item.id + '</td>');
@@ -451,7 +453,7 @@ $(function(){
     updateTotalGeneral();
   };
 
-  // 5) Funciones de rec·lculo
+  // 5) Funciones de rec√°lculo
   function recalcRow($tr){
     var q = parseFloat($tr.find('.qty').val()) || 0;
     var p = parseFloat($tr.find('.price').val()) || 0;
@@ -465,55 +467,77 @@ $(function(){
     $('#totalGeneral').text(total.toFixed(2));
   }
 
-  // 6) DelegaciÛn de eventos
+  // 6) Delegaci√≥n de eventos
   $(document).on('change', '.qty', function(){
     var $this = $(this),
         val   = parseFloat($this.val()) || 0,
         max   = parseFloat($this.attr('max')) || 0,
         $tr   = $this.closest('tr');
     if (val > max) {
-      Swal.fire('Cantidad excede el m·ximo','No puedes ingresar m·s de ' + max.toFixed(2),'warning');
-      $this.val(max.toFixed(2));
-    }
-    recalcRow($tr);
-    updateTotalGeneral();
-  });
-
-  // Ajustar max al cambiar lote
-  $(document).on('change', '.loteSelect', function(){
-    var $tr = $(this).closest('tr'),
-        itemTotal = parseFloat($tr.find('td').eq(3).text()),
-        loteData = JSON.parse($(this).val()),
-        maxNew = parseFloat(loteData.cantidad) || itemTotal,
-        $qty = $tr.find('.qty');
-    $qty.attr('max', maxNew.toFixed(2));
-    if ((parseFloat($qty.val())||0) > maxNew) {
-      $qty.val(maxNew.toFixed(2));
-    }
-    recalcRow($tr);
-    updateTotalGeneral();
-  });
-
-  // 7) Guardar egreso
   $('#btnGuardarDatos').on('click', function(e){
     e.preventDefault();
-    var detalles = [];
-    $('#detalleTable tbody tr').each(function(){
-      var $tr = $(this), cols = $tr.find('td'), loteData;
-      try { loteData = JSON.parse($tr.find('.loteSelect').val()); } catch(_) { loteData = { fecha_vencimiento:null, lote:null }; }
-      detalles.push({
-        existencia_id:     parseInt(cols.eq(0).text(),10),
-        fecha_vencimiento: loteData.fecha_vencimiento,
-        lote:              loteData.lote,
-        cantidad:          parseFloat($tr.find('.qty').val())||0,
-        precio_unitario:   parseFloat($tr.find('.price').val())||0
-      });
+    $btnGuardar.prop('disabled', true);
+  var detalles = [];
+  $('#detalleTable tbody tr').each(function(){
+    var $tr = $(this), cols = $tr.find('td'), loteData;
+    try { loteData = JSON.parse($tr.find('.loteSelect').val()); } catch(_) { loteData = { fecha_vencimiento:null, lote:null }; }
+    detalles.push({
+      existencia_id:     parseInt(cols.eq(0).text(),10),
+      fecha_vencimiento: loteData.fecha_vencimiento,
+      lote:              loteData.lote,
+      cantidad:          parseFloat($tr.find('.qty').val())||0,
+      precio_unitario:   parseFloat($tr.find('.price').val())||0
     });
-    var payload = {
-      usuario: $('input[name="usuario"]').val(),
-      fecha: $('#fecha').val(),
-      tipo_movimiento: $('#tipo_movimiento').val(),
-      proveedor: $('#proveedor').val(),
+  });
+  var payload = {
+    usuario: $('input[name="usuario"]').val(),
+    fecha: $('#fecha').val(),
+    tipo_movimiento: $('#tipo_movimiento').val(),
+    proveedor: $('#proveedor').val(),
+    servicio_devuelve: $('#servicio_devuelve').val(),
+    observaciones_compra: $('#observaciones_compra').val(),
+    detalles: detalles
+  };
+
+  Swal.fire({
+    title: 'Procesando egreso',
+    didOpen: () => Swal.showLoading()
+  });
+
+  $.ajax({
+    url: base + '/EgresosServlet',
+    method: 'POST',
+    contentType: 'application/json; charset=UTF-8',
+    data: JSON.stringify(payload),
+    dataType: 'json',
+    statusCode: {
+      400: function(xhr){
+        Swal.close();
+        var msg = 'Error de validaci√≥n en el servidor.';
+        try {
+          var res = JSON.parse(xhr.responseText);
+          if (res.message) msg = res.message;
+        } catch(e){}
+        Swal.fire('Error', msg, 'error');
+        $btnGuardar.prop('disabled', false);
+      }
+    }
+  })
+  .done(function(res){
+    Swal.close();
+    if (res.success) {
+      Swal.fire('Listo!','Egreso guardado','success')
+        .then(()=> window.location = base + '/agregaregreso.jsp');
+    } else {
+      Swal.fire('Error', res.message || res.error || 'Fall√≥ guardado','error');
+      $btnGuardar.prop('disabled', false);
+    }
+  })
+  .fail(function(){
+    Swal.close();
+    Swal.fire('Error','No se pudo conectar con el servidor.','error');
+    $btnGuardar.prop('disabled', false);
+  });
       servicio_devuelve: $('#servicio_devuelve').val(),
       observaciones_compra: $('#observaciones_compra').val(),
       detalles: detalles
@@ -527,10 +551,10 @@ $(function(){
     })
     .done(function(res){
       if (res.success) {
-        Swal.fire('°Listo!','Egreso guardado','success')
+        Swal.fire('¬°Listo!','Egreso guardado','success')
           .then(()=> window.location = base + '/agregaregreso.jsp');
       } else {
-        Swal.fire('Error', res.error||'FallÛ guardado','error');
+        Swal.fire('Error', res.error||'Fall√≥ guardado','error');
       }
     })
     .fail(function(xhr){
