@@ -257,13 +257,13 @@
           </button>
         </div>
         <div class="modal-body">
-          <p><strong>Rengl贸n:</strong> <span id="det_renglon"></span></p>
-          <p><strong>C贸digo Insumo:</strong> <span id="det_codinsumo"></span></p>
+          <p><strong>Reng髇:</strong> <span id="det_renglon"></span></p>
+          <p><strong>C骴igo Insumo:</strong> <span id="det_codinsumo"></span></p>
           <p><strong>Nombre:</strong> <span id="det_nombre"></span></p>
-          <p><strong>Caracter铆sticas:</strong> <span id="det_caracteristicas"></span></p>
-          <p><strong>Nombre Presentaci贸n:</strong> <span id="det_npresentacion"></span></p>
-          <p><strong>Medida Presentaci贸n:</strong> <span id="det_mpresentacion"></span></p>
-          <p><strong>C贸digo Presentaci贸n:</strong> <span id="det_codpresentacion"></span></p>
+          <p><strong>Caracter憝sticas:</strong> <span id="det_caracteristicas"></span></p>
+          <p><strong>Nombre Presentaci髇:</strong> <span id="det_npresentacion"></span></p>
+          <p><strong>Medida Presentaci髇:</strong> <span id="det_mpresentacion"></span></p>
+          <p><strong>C骴igo Presentaci髇:</strong> <span id="det_codpresentacion"></span></p>
           <p><strong>Cantidad Actual:</strong> <span id="det_cantidad_actual"></span></p>
           <p><strong>Precio Unitario:</strong> Q<span id="det_precio_unitario"></span></p>
         </div>
