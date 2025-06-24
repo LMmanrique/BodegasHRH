@@ -533,9 +533,18 @@ $(function(){
         Swal.fire('Error', res.error||'Falló guardado','error');
       }
     })
-    .fail(function(xhr){
-      Swal.fire('Error','Fallo de servidor','error');
-    });
+    .fail(function(xhr, status, error){
+        console.error('Respuesta del servidor:', xhr.responseText);
+        // intenta extraer JSON
+        let msg = 'Error de servidor: ' + xhr.status;
+        try {
+          let resp = JSON.parse(xhr.responseText);
+          if (resp.error) msg = resp.error;
+        } catch(e) {
+          msg = xhr.status + ' ' + xhr.statusText;
+        }
+        Swal.fire('Error', msg, 'error');
+      });
   });
 });
 </script>

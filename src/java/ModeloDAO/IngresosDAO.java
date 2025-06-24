@@ -328,30 +328,39 @@ private void insertarDetalle(Ingreso ingreso, Connection conn) throws SQLExcepti
         return arr.toString();
     }
 
-    public boolean anularMovimiento(int movimientoId) throws SQLException {
-    // 1) Marca el movimiento como anulado
-    String sql = "UPDATE movimientos SET anulado=1 WHERE id=?";
-    boolean updated;
-    try (Connection conn = cfg.conectar();
-         Statement st = conn.createStatement();
-         PreparedStatement ps = conn.prepareStatement(sql)) {
-        st.execute("SET NAMES 'utf8'");
-        ps.setInt(1, movimientoId);
-        updated = ps.executeUpdate() > 0;
-    }
-    // 2) Si se actualizó, reconstruye existencias y precios
-    if (updated) {
-        try (Connection conn = cfg.conectar();
-             Statement st = conn.createStatement();
-             CallableStatement cs1 = conn.prepareCall("CALL sp_reconstruir_existencias()");
-             CallableStatement cs2 = conn.prepareCall("CALL sp_reconstruir_precios()")) {
+public boolean anularMovimiento(int movimientoId) throws SQLException {
+    String sqlUpdate = "UPDATE movimientos SET anulado = 1 WHERE id = ?";
+    boolean updated = false;
+
+    try (Connection conn = cfg.conectar()) {
+        // 1) Iniciamos transacción manual
+        conn.setAutoCommit(false);
+
+        // 2) Nos aseguramos de usar UTF-8
+        try (Statement st = conn.createStatement()) {
             st.execute("SET NAMES 'utf8'");
-            cs1.execute();
-            cs2.execute();
         }
+
+        // 3) Marcamos anulado
+        try (PreparedStatement ps = conn.prepareStatement(sqlUpdate)) {
+            ps.setInt(1, movimientoId);
+            updated = ps.executeUpdate() > 0;
+        }
+
+        // 4) Si todo OK, confirmamos; si no, revertimos.
+        if (updated) {
+            conn.commit();
+        } else {
+            conn.rollback();
+        }
+    } catch (SQLException ex) {
+        // Si ocurre cualquier error, lanzamos excepción tras rollback implícito (try-with-resources cierra conexión)
+        throw ex;
     }
+
     return updated;
 }
+
     public String getEspecificoJSON(int movimientoId) throws SQLException {
     // 1) Averigua el tipo de movimiento
         String tipoSql = 

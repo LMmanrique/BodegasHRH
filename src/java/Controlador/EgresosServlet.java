@@ -1,12 +1,10 @@
-// ------------------------------------------------------
-// File: Controlador/EgresosServlet.java
-// ------------------------------------------------------
 package Controlador;
 
 import Modelo.EgresoPayload;
 import Modelo.DetalleDTO;
 import ModeloDAO.EgresosDAO;
 import com.google.gson.Gson;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "EgresosServlet", urlPatterns = {"/EgresosServlet"})
@@ -56,7 +53,11 @@ public class EgresosServlet extends HttpServlet {
             }
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            response.getWriter().print("{\"error\":\"" + e.getMessage() + "\"}");
+            try (PrintWriter out = response.getWriter()) {
+                String msg = e.getMessage().replace("\"","\\\"").replace("\n","\\n");
+                out.print("{\"error\":\"" + msg + "\"}");
+            }
+            e.printStackTrace();
         }
     }
 
@@ -74,7 +75,7 @@ public class EgresosServlet extends HttpServlet {
                 out.print("{\"success\":false,\"error\":\"JSON inválido\"}");
                 return;
             }
-            // Validaciones de campos obligatorios (excepto observaciones)
+            // Validaciones de campos obligatorios
             if (payload.getUsuario() == null || payload.getUsuario().trim().isEmpty()) {
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 out.print("{\"success\":false,\"error\":\"Usuario es obligatorio\"}");
@@ -101,7 +102,7 @@ public class EgresosServlet extends HttpServlet {
                 out.print("{\"success\":false,\"error\":\"Debe agregar al menos un insumo\"}");
                 return;
             }
-            // Validar que cada detalle tenga cantidad y precio válidos
+            // Validar cada detalle
             for (DetalleDTO d : detalles) {
                 if (d.getCantidad() <= 0) {
                     response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -128,11 +129,17 @@ public class EgresosServlet extends HttpServlet {
             dao.guardarEgresoCompleto(fecha, noReq, servicio, obs, usuarioId, detalles);
             out.print("{\"success\":true}");
         } catch (Exception e) {
+            // En caso de excepción, devolvemos JSON con detalle del error
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.setContentType("application/json;charset=UTF-8");
+            String msg = e.getMessage() != null
+                       ? e.getMessage().replace("\"","\\\"").replace("\n","\\n")
+                       : "Error desconocido";
             try (PrintWriter out = response.getWriter()) {
-                String msg = e.getMessage().replace("\n", "\\n");
                 out.print("{\"success\":false,\"error\":\"" + msg + "\"}");
             }
+            // Log para diagnóstico en servidor
+            e.printStackTrace();
         }
     }
 }

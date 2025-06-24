@@ -77,7 +77,7 @@
           </table>
         </div>
         <div class="modal-footer">
-          <c:if test="${sessionScope.usuario.cargo == 'ADMIN1'}">
+          <c:if test="${sessionScope.usuario.cargo == 'ADMIN'}">
             <button type="button" id="btnAnularEgreso" class="btn btn-danger">
               <iconify-icon icon="solar:clipboard-remove-linear" width="30" height="30"></iconify-icon> Anular
             </button>
@@ -104,6 +104,7 @@
 <script>
   $(document).ready(function() {
     var servletUrl = '<c:url value="/EgresosServlet"/>';
+    var servletUrl2 = '<c:url value="/NuevoMovimientoServlet"/>';
 
     var table = $('#tablaEgresos').DataTable({
       ajax: {
@@ -182,25 +183,25 @@
     });
 
     // Anular
-    $('#btnAnularEgreso').click(function() {
-      var id = $(this).data('id');
-      Swal.fire({
-        title: '¿Anular egreso?',
-        showCancelButton: true,
-        confirmButtonText: 'Sí'
-      }).then(function(r) {
-        if (!r.isConfirmed) return;
-        $.post(servletUrl + '?action=anular', { id: id }, function(resp) {
-          if (resp.success) {
-            Swal.fire('Anulado', '', 'success');
-            table.ajax.reload();
-            $('#modalDetalleEgreso').modal('hide');
-          } else {
-            Swal.fire('Error', resp.error || '', 'error');
-          }
-        }, 'json');
+$('#btnAnularEgreso').click(function() {
+        var id = $(this).data('id');
+        Swal.fire({
+          title: '¿Anular movimiento?',
+          showCancelButton: true,
+          confirmButtonText: 'Sí'
+        }).then(function(r) {
+          if (!r.isConfirmed) return;
+          $.post(servletUrl2, { action: 'anular', id: id }, function(resp) {
+            if (resp.success) {
+              Swal.fire('Anulado','','success');
+              table.ajax.reload();
+              $('#modalDetalle').modal('hide');
+            } else {
+              Swal.fire('Error', resp.message || '', 'error');
+            }
+          });
+        });
       });
-    });
   });
 </script>
 </body>
