@@ -104,98 +104,114 @@
   <script src="${pageContext.request.contextPath}/assets/sweetAlert2/sweetalert2.all.min.js"></script>
 
   <script>
-    // --- Helpers de formato ---
-    function formatDateYMD(dateStr) {
-      if (!dateStr) return '';
-      var parts = dateStr.split(' ')[0].split('-');
-      return parts[2].padStart(2,'0') + '/' +
-             parts[1].padStart(2,'0') + '/' +
-             parts[0];
-    }
+  // Formatea "YYYY-MM-DD HH:MM:SS" a "DD/MM/YYYY"
+  function formatDateYMD(dateStr) {
+    if (!dateStr) return '';
+    var parts = dateStr.split(' ')[0].split('-');
+    return parts[2].padStart(2,'0') + '/' +
+           parts[1].padStart(2,'0') + '/' +
+           parts[0];
+  }
 
-    $(document).ready(function() {
-      console.log('Inicializando tabla de ingresos');
+  $(document).ready(function() {
+    console.log('Inicializando tabla de ingresos');
 
-      var servletUrl = '<c:url value="/NuevoMovimientoServlet"/>';
-      var table = $('#tablaIngresos').DataTable({
-        ajax: {
-          url: servletUrl + '?action=list',
-          dataSrc: '',
-          error: function(xhr) {
-            console.error('Error AJAX:', xhr.status, xhr.responseText);
+    // Tipos que consideramos "Ingreso"
+    const tiposIngreso = [
+      'DEVOLUCIÓN',
+      'COMPRA',
+      'TRASLADO',
+      'DONACIÓN',
+      'CAMBIO POR VENCIMIENTO'
+    ];
+
+    var servletUrl = '<c:url value="/NuevoMovimientoServlet"/>';
+    var table = $('#tablaIngresos').DataTable({
+      ajax: {
+        url: servletUrl + '?action=list',
+        dataSrc: function(json) {
+          // Filtramos solo los registros de ingreso
+          return json.filter(function(item) {
+            return tiposIngreso.includes(item.tipo.toUpperCase().trim());
+          });
+        },
+        error: function(xhr) {
+          console.error('Error AJAX:', xhr.status, xhr.responseText);
+        }
+      },
+      columns: [
+        { data: 'id' },
+        { data: 'tipo' },
+        {
+          data: 'fecha',
+          render: function(data) {
+            return formatDateYMD(data);
           }
         },
-        columns: [
-          { data: 'id' },
-          { data: 'tipo' },
-          {
-            data: 'fecha',
-            render: function(data) {
-              return formatDateYMD(data);
-            }
-          },
-          { data: 'usuario' },
-          {
-            data: 'total',
-            render: $.fn.dataTable.render.number(',', '.', '', '')
-          },
-          {
-            data: null,
-            orderable: false,
-            render: function() {
-              return '<button class="btn btn-sm btn-primary btn-detalle" style="width:60px;">' +
-                     '<iconify-icon icon="solar:eye-scan-linear" width="25" height="25"></iconify-icon><br/>Ver</button>';
-            }
+        { data: 'usuario' },
+        {
+          data: 'total',
+          render: $.fn.dataTable.render.number(',', '.', '', '')
+        },
+        {
+          data: null,
+          orderable: false,
+          render: function() {
+            return '<button class="btn btn-sm btn-primary btn-detalle" style="width:60px;">' +
+                   '<iconify-icon icon="solar:eye-scan-linear" width="25" height="25"></iconify-icon><br/>Ver</button>';
           }
-        ],
-        order: [[2, 'desc']]
+        }
+      ],
+      order: [[2, 'desc']]
+    });
+
+    // Manejo del click en “Ver detalle”
+    $('#tablaIngresos tbody').on('click', '.btn-detalle', function() {
+      var data = table.row($(this).closest('tr')).data();
+      var id   = data.id;
+
+      // Cabecera
+      $.getJSON(servletUrl + '?action=get&id=' + id, function(det) {
+        $('#detalleCabecera').html(
+          '<p><strong>Tipo:</strong> ' + det.tipo + '</p>' +
+          '<p><strong>Fecha:</strong> ' + formatDateYMD(det.fecha) + ' ' + det.hora + '</p>'
+        );
       });
 
-      // Click en “Ver detalle”
-      $('#tablaIngresos tbody').on('click', '.btn-detalle', function() {
-        var data = table.row($(this).closest('tr')).data(),
-            id   = data.id;
+      // Datos específicos
+      $('#detalleEspecifico').empty();
+      $.getJSON(servletUrl + '?action=especifico&id=' + id, function(espec) {
+        if (espec.datos) {
+          var html = '<h6>Datos adicionales (' + espec.tipo + ')</h6><dl class="row">';
+          $.each(espec.datos, function(k, v) {
+            html += '<dt class="col-sm-3">' + k.replace(/_/g,' ') + ':</dt>' +
+                    '<dd class="col-sm-9">' + v + '</dd>';
+          });
+          html += '</dl>';
+          $('#detalleEspecifico').html(html);
+        }
+      });
 
-        // Cabecera
-        $.getJSON(servletUrl + '?action=get&id=' + id, function(det) {
-          $('#detalleCabecera').html(
-            '<p><strong>Tipo:</strong> ' + det.tipo + '</p>' +
-            '<p><strong>Fecha:</strong> ' + formatDateYMD(det.fecha) + ' ' + det.hora + '</p>'
+      // Ítems
+      $('#detalleItems').empty();
+      $.getJSON(servletUrl + '?action=items&id=' + id, function(items) {
+        var $b = $('#detalleItems');
+        items.forEach(function(it) {
+          $b.append(
+            '<tr>' +
+            '<td>' + it.insumo + '</td>' +
+            '<td>' + it.cantidad + '</td>' +
+            '<td>Q.' + it.precioUnitario.toFixed(2) + '</td>' +
+            '<td>Q.' + (it.cantidad * it.precioUnitario).toFixed(2) + '</td>' +
+            '</tr>'
           );
         });
-
-        // Específico
-        $('#detalleEspecifico').empty();
-        $.getJSON(servletUrl + '?action=especifico&id=' + id, function(espec) {
-          if (espec.datos) {
-            var html = '<h6>Datos adicionales (' + espec.tipo + ')</h6><dl class="row">';
-            $.each(espec.datos, function(k, v) {
-              html += '<dt class="col-sm-3">' + k.replace(/_/g,' ') + ':</dt>' +
-                      '<dd class="col-sm-9">' + v + '</dd>';
-            });
-            html += '</dl>';
-            $('#detalleEspecifico').html(html);
-          }
-        });
-
-        // Ítems
-        $.getJSON(servletUrl + '?action=items&id=' + id, function(items) {
-          var $b = $('#detalleItems').empty();
-          items.forEach(function(it) {
-            $b.append(
-              '<tr>' +
-              '<td>' + it.insumo + '</td>' +
-              '<td>' + it.cantidad + '</td>' +
-              '<td>Q.' + it.precioUnitario.toFixed(2) + '</td>' +
-              '<td>Q.' + (it.cantidad * it.precioUnitario).toFixed(2) + '</td>' +
-              '</tr>'
-            );
-          });
-        });
-
-        $('#btnAnular').data('id', id);
-        $('#modalDetalle').modal('show');
       });
+
+      // Botón anular
+      $('#btnAnular').data('id', id);
+      $('#modalDetalle').modal('show');
+    });
 
       // Botón Anular
       $('#btnAnular').click(function() {
