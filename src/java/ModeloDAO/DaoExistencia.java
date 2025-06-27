@@ -231,4 +231,46 @@ public List<Existencia> buscarExistencias(
 
         return lista;
     }
+
+/**
+ * Comprueba si existen movimientos (detalle_movimiento) para esta existencia.
+ */
+public boolean hasMovimientos(int existenciaId) {
+    String sql =
+      "SELECT COUNT(*) " +
+      "  FROM detalle_movimiento dm " +
+      "  JOIN movimientos m ON dm.movimiento_id = m.id " +
+      " WHERE dm.existencia_id = ? " +
+      "   AND m.anulado = 0";
+    try (Connection cn = new conexion().conectar();
+         PreparedStatement ps = cn.prepareStatement(sql)) {
+        ps.setInt(1, existenciaId);
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        }
+    } catch (SQLException e) {
+        System.err.println("Error en hasMovimientos: " + e.getMessage());
+    }
+    // En caso de error, mejor bloquear edición
+    return true;
+}
+
+    public int actualizarCantidadPrecio(Existencia ex) {
+    int result = 0;
+    String sql = "UPDATE existencias " +
+                 "SET cantidad_actual = ?, precio_unitario = ? " +
+                 "WHERE id = ?";
+    try (Connection cn = new conexion().conectar();
+         PreparedStatement ps = cn.prepareStatement(sql)) {
+        ps.setDouble(1, ex.getCantidad_actual());
+        ps.setDouble(2, ex.getPrecio_unitario());
+        ps.setInt(3, ex.getId());
+        result = ps.executeUpdate();
+    } catch (SQLException e) {
+        System.err.println("Error en actualizarCantidadPrecio: " + e.getMessage());
+    }
+    return result;
+}
 }

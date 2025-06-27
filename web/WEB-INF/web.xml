@@ -64,6 +64,14 @@
         <servlet-name>EgresosServlet</servlet-name>
         <servlet-class>Controlador.EgresosServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ExistenciaCodigoServlet</servlet-name>
+        <servlet-class>Controlador.ExistenciaCodigoServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditarExistenciaServlet</servlet-name>
+        <servlet-class>Controlador.EditarExistenciaServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -107,6 +115,14 @@
     <servlet-mapping>
         <servlet-name>EgresosServlet</servlet-name>
         <url-pattern>/EgresosServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExistenciaCodigoServlet</servlet-name>
+        <url-pattern>/ExistenciaCodigoServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditarExistenciaServlet</servlet-name>
+        <url-pattern>/EditarExistenciaServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

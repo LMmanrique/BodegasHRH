@@ -209,15 +209,12 @@
                       <td class="destacado">${existencia.cantidad_actual}</td>
                       <td>Q${existencia.precio_unitario}</td>
                       <td> <!-- NUEVA CELDA DE OPCIONES -->
-                          <a href="editarExistencia.jsp?id=${existencia.id}"
-                            class="btn btn-warning btn-sm btn-square
-                                   d-flex flex-column align-items-center justify-content-center">
-                           <iconify-icon
-                             icon="solar:document-add-linear"
-                             width="24" height="24">
-                           </iconify-icon>
-                           <span class="small mt-1">Editar</span>
-                         </a>
+                          <button type="button"
+                                    class="btn btn-warning btn-sm btn-square d-flex flex-column align-items-center justify-content-center btn-open-edit"
+                                    data-id="${existencia.id}">
+                              <iconify-icon icon="solar:document-add-linear" width="24" height="24"></iconify-icon>
+                              <span class="small mt-1">Editar</span>
+                            </button>
                       </td>
                     </tr>
                   </c:forEach>
@@ -521,6 +518,58 @@
     </div>
   </div>
 </div>
+            
+<!-- Modal de edición -->
+<div class="modal fade" id="modalEditarExistencia" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Existencia</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Mensaje de bloqueo -->
+        <div id="msgBloqueo" class="alert alert-danger d-none">
+          No se puede editar porque existen movimientos registrados.
+        </div>
+
+        <!-- Formulario edición campos -->
+        <form id="formEditarExistencia">
+          <input type="hidden" name="id" id="existenciaId" />
+          <div class="mb-3">
+            <label for="cantidadActual" class="form-label">Cantidad Actual</label>
+            <input type="number" step="0.01" class="form-control" id="cantidadActual" name="cantidad_actual" />
+          </div>
+          <div class="mb-3">
+            <label for="precioUnitario" class="form-label">Precio Unitario</label>
+            <input type="number" step="0.01" class="form-control" id="precioUnitario" name="precio_unitario" />
+          </div>
+          <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        </form>
+
+        <hr/>
+
+        <!-- Tabla CRUD Marcas -->
+        <h6>Marcas</h6>
+        <button id="btnAgregarMarca" class="btn btn-success btn-sm mb-2">Agregar Marca</button>
+        <table class="table table-bordered" id="tablaMarcas">
+          <thead>
+            <tr>
+              <th>Código de Barras</th>
+              <th>Marca</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
   <script src="${pageContext.request.contextPath}/assets/libs/jquery/dist/jquery.min.js"></script>
   <script src="${pageContext.request.contextPath}/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -731,6 +780,141 @@ $('#guardarExistenciaBtnModal').on('click', function() {
         });
     })();
   </script>
+  
+<!-- Script AJAX para modal con SweetAlert2 -->
+<script>
+$(function() {
+  var editarUrl = '${pageContext.request.contextPath}/EditarExistenciaServlet';
+  var codigoUrl = '${pageContext.request.contextPath}/ExistenciaCodigoServlet';
+  var currentExistenciaId = null;
+
+  function loadMarcas(existenciaId) {
+    $('#tablaMarcas tbody').empty();
+    $.getJSON(codigoUrl + '?action=list&id=' + existenciaId, function(list) {
+      list.forEach(function(c) {
+        $('#tablaMarcas tbody').append(
+          '<tr data-id="'+c.id+'">'+
+            '<td>'+c.codigoBarras+'</td>'+  
+            '<td>'+c.marca+'</td>'+        
+            '<td>'+                      
+              '<button class="btn btn-sm btn-primary btn-edit-codigo me-1">Editar</button>'+  
+              '<button class="btn btn-sm btn-danger btn-del-codigo">Eliminar</button>'+ 
+            '</td>'+                     
+          '</tr>'
+        );
+      });
+    });
+  }
+
+  $(document).on('click', '.btn-open-edit', function() {
+    var id = $(this).data('id');
+    currentExistenciaId = id;
+    $('#msgBloqueo').addClass('d-none');
+    $('#formEditarExistencia')[0].reset();
+    loadMarcas(id);
+    $('#existenciaId').val(id);
+
+    $.getJSON(editarUrl + '?action=checkMovimientos&id=' + id, function(resp) {
+      if (resp.success) {
+        $('#formEditarExistencia').hide();
+        $('#msgBloqueo').removeClass('d-none');
+      } else {
+        $('#formEditarExistencia').show();
+      }
+    });
+    $.getJSON(editarUrl + '?action=get&id=' + id, function(e) {
+      $('#cantidadActual').val(e.cantidad_actual);
+      $('#precioUnitario').val(e.precio_unitario);
+    });
+    $('#modalEditarExistencia').modal('show');
+  });
+
+  $('#btnAgregarMarca').click(function() {
+    var row = $('<tr>')
+      .append('<td><input type="text" class="form-control codigo_input"></td>')
+      .append('<td><input type="text" class="form-control marca_input"></td>')
+      .append('<td><button class="btn btn-sm btn-success btn-save-codigo">Guardar</button></td>');
+    $('#tablaMarcas tbody').prepend(row);
+  });
+
+  $('#tablaMarcas').on('click', '.btn-save-codigo', function() {
+    var tr = $(this).closest('tr');
+    var data = {
+      existencia_id: currentExistenciaId,
+      codigo_barras: tr.find('.codigo_input').val(),
+      marca:         tr.find('.marca_input').val()
+    };
+    $.post(codigoUrl + '?action=create', data, function(resp) {
+      if (resp.success) {
+        Swal.fire({ icon: 'success', title: '¡Listo!', text: resp.message });
+        loadMarcas(currentExistenciaId);
+      } else {
+        Swal.fire({ icon: 'error', title: 'Error', text: resp.message });
+      }
+    }, 'json');
+  });
+
+  $('#tablaMarcas').on('click', '.btn-edit-codigo', function() {
+    var tr = $(this).closest('tr');
+    tr.find('td:eq(0)').html('<input class="form-control codigo_input" value="'+tr.children().eq(0).text()+'">');
+    tr.find('td:eq(1)').html('<input class="form-control marca_input" value="'+tr.children().eq(1).text()+'">');
+    $(this).replaceWith('<button class="btn btn-sm btn-success btn-update-codigo">Guardar</button>');
+  });
+
+  $('#tablaMarcas').on('click', '.btn-update-codigo', function() {
+    var tr = $(this).closest('tr');
+    var data = {
+      id:            tr.data('id'),
+      codigo_barras: tr.find('.codigo_input').val(),
+      marca:         tr.find('.marca_input').val()
+    };
+    $.post(codigoUrl + '?action=update', data, function(resp) {
+      if (resp.success) {
+        Swal.fire({ icon: 'success', title: '¡Actualizado!', text: resp.message });
+        loadMarcas(currentExistenciaId);
+      } else {
+        Swal.fire({ icon: 'error', title: 'Error', text: resp.message });
+      }
+    }, 'json');
+  });
+
+  $('#tablaMarcas').on('click', '.btn-del-codigo', function() {
+    var tr = $(this).closest('tr');
+    var idc = tr.data('id');
+    Swal.fire({
+      title: '¿Eliminar marca?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.post(codigoUrl + '?action=delete', { id: idc }, function(resp) {
+          if (resp.success) {
+            Swal.fire({ icon: 'success', title: 'Eliminado', text: resp.message });
+            loadMarcas(currentExistenciaId);
+          } else {
+            Swal.fire({ icon: 'error', title: 'Error', text: resp.message });
+          }
+        }, 'json');
+      }
+    });
+  });
+
+  $('#formEditarExistencia').submit(function(e) {
+    e.preventDefault();
+    $.post(editarUrl + '?action=update', $(this).serialize(), function(resp) {
+      if (resp.success) {
+        Swal.fire({ icon: 'success', title: '¡Guardado!', text: resp.message })
+          .then(() => location.reload());
+      } else {
+        Swal.fire({ icon: 'error', title: 'Error', text: resp.message });
+      }
+    }, 'json');
+  });
+});
+</script>
+
 
 </body>
 
