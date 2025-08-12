@@ -120,6 +120,7 @@
                 <option value="neonatología">Neonatología</option>
                 <option value="neumología">Neumología</option>
                 <option value="nutrición">Nutrición</option>
+                <option value="odontología">Odontología</option>
                 <option value="patología">Patología</option>
                 <option value="pediatría">Pediatría</option>
                 <option value="planificación familiar">Planificación Familiar</option>
@@ -132,6 +133,8 @@
                 <option value="resguardo y vigilancia">Resguardo y Vigilancia</option>
                 <option value="sala de operaciones general">Sala de Operaciones General</option>
                 <option value="sala de operaciones materno-neonatal">Sala de Operaciones Materno-Neonatal</option>
+                <option value="secretaria ejecutiva">Secretaria Ejecutiva</option>
+                <option value="servicios generales">Servicios Generales</option>
                 <option value="subdirección de enfermería">Subdirección de Enfermería</option>
                 <option value="subdirección de recursos humanos">Subdirección de Recursos Humanos</option>
                 <option value="subdirección médica">Subdirección Médica</option>

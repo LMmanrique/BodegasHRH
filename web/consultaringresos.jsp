@@ -42,6 +42,7 @@
                     <th>ID</th>
                     <th>Tipo</th>
                     <th>Fecha</th>
+                    <th>Detalles</th>
                     <th>Usuario</th>
                     <th>Total</th>
                     <th>Acciones</th>
@@ -126,6 +127,8 @@
     ];
 
     var servletUrl = '<c:url value="/NuevoMovimientoServlet"/>';
+    var detallesCache = {};
+
     var table = $('#tablaIngresos').DataTable({
       ajax: {
         url: servletUrl + '?action=list',
@@ -148,6 +151,57 @@
             return formatDateYMD(data);
           }
         },
+        {
+        data: 'detallesTexto',
+        className: 'detalles-cell',
+        orderable: false,
+        render: function(data, type, row) {
+          // Para búsqueda/ordenación devolvemos texto plano
+          if (type === 'filter' || type === 'sort') {
+            if (data && typeof data === 'object') return data.text || '';
+            return typeof data === 'string' ? data : '';
+          }
+
+          // DISPLAY (HTML formateado)
+          if (data && typeof data === 'object') return data.html || '...';
+          if (typeof data === 'string' && data) return data;
+
+          var id = row.id;
+          if (detallesCache[id]) {
+            return detallesCache[id].html || detallesCache[id] || '...';
+          }
+
+          // Cargar y cachear html + texto plano
+          setTimeout(function(){
+            $.getJSON(servletUrl + '?action=especifico&id=' + id, function(espec) {
+              var payload = { html: '-', text: '' };
+              if (espec && espec.datos) {
+                var lineas = [];
+                $.each(espec.datos, function(k, v) {
+                  var label = k.replace(/_/g,' ').trim();
+                  label = label.split(' ').map(function(w){
+                    return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
+                  }).join(' ');
+                  lineas.push('<strong>' + label + ':</strong> ' + (v == null ? '' : v));
+                });
+                payload.html = '<div style="white-space: pre-line;">' + lineas.join('\n') + '</div>';
+                payload.text = lineas.map(function(s){ return s.replace(/<[^>]+>/g,''); }).join('\n');
+              }
+              detallesCache[id] = payload;
+
+              // Inyectamos en la fila para que DataTables indexe el texto para búsqueda
+              var dt = $('#tablaIngresos').DataTable();
+              var rowIdx = dt.rows(function(i, d){ return d.id === id; }).indexes()[0];
+              if (rowIdx !== undefined) {
+                var d = dt.row(rowIdx).data();
+                d.detallesTexto = payload;
+                dt.row(rowIdx).data(d).invalidate();
+              }
+            });
+          }, 0);
+          return '...';
+        }
+      },
         { data: 'usuario' },
         {
           data: 'total',

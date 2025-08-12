@@ -42,6 +42,7 @@
                     <th>ID</th>
                     <th>Tipo</th>
                     <th>Fecha</th>
+                    <th>Detalles</th>
                     <th>Usuario</th>
                     <th>Total</th>
                     <th>Acciones</th>
@@ -105,6 +106,9 @@
   $(document).ready(function() {
     var servletUrl = '<c:url value="/EgresosServlet"/>';
     var servletUrl2 = '<c:url value="/NuevoMovimientoServlet"/>';
+    // Antes de inicializar la tabla:
+    var detallesCache = {};         // { [id]: { html: string, text: string } }
+    var detallesEnProgreso = {};    // evita llamadas duplicadas por fila
 
     var table = $('#tablaEgresos').DataTable({
       ajax: {
@@ -117,8 +121,61 @@
         {
           data: 'fecha',
           render: function(d) {
-            // Ajusta formato si quieres: YYYY-MM-DD
             return d;
+          }
+        },
+        {
+          data: null,
+          orderable: false,
+          searchable: true,
+          render: function(data, type, row) {
+            var id = row.id;
+            var cached = detallesCache[id];
+
+            // Para filtrado/ordenamiento, devolver solo texto (esto es lo que DataTables indexa para el buscador)
+            if (type === 'filter' || type === 'sort') {
+              return cached ? cached.text : '';
+            }
+
+            // Para display, si ya está en caché mostramos el HTML
+            if (cached) {
+              return cached.html;
+            }
+
+            // Si no está en caché y no hay fetch en progreso, lo pedimos
+            if (!detallesEnProgreso[id]) {
+              detallesEnProgreso[id] = true;
+              $.getJSON(servletUrl + '?action=especifico&id=' + id, function(espec) {
+                var detalleHtml =
+                  '<div class="small">' +
+                    '<div><strong>Req:</strong> ' + (espec.noRequisicion || '-') + '</div>' +
+                    '<div><strong>Serv:</strong> ' + (espec.servicio || '-') + '</div>' +
+                    '<div><strong>Obs:</strong> ' + (espec.observaciones || '-') + '</div>' +
+                  '</div>';
+
+                var detalleText = [
+                  espec.noRequisicion || '',
+                  espec.servicio || '',
+                  espec.observaciones || ''
+                ].join(' ').trim();
+
+                detallesCache[id] = { html: detalleHtml, text: detalleText };
+                detallesEnProgreso[id] = false;
+
+                // Invalida la fila para que se actualice la celda y el índice de búsqueda
+                var rowIdx = table.row(function(idx, d){ return d.id === id; }).index();
+                if (rowIdx !== undefined && rowIdx !== null) {
+                  // Forzamos re-render de la celda y reindexación para búsqueda
+                  table.cell({ row: rowIdx, column: 3 }).data(null);
+                  table.rows(rowIdx).invalidate().draw(false);
+                } else {
+                  table.rows().invalidate().draw(false);
+                }
+              });
+            }
+
+            // Mientras carga
+            return '<div class="small text-muted">Cargando...</div>';
           }
         },
         { data: 'usuario' },
