@@ -79,7 +79,6 @@
                 Servicio<span class="text-danger">*</span>
               </label>
               <select class="form-select" id="servicio_devuelve" name="servicio_devuelve" required>
-                
                 <option value="activos fijos e inventario">Activos Fijos e Inventario</option>
                 <option value="asesoría jurídica">Asesoría Jurídica</option>
                 <option value="banco de leche">Banco de Leche</option>
@@ -91,7 +90,6 @@
                 <option value="cirugía de hombres">Cirugía de Hombres</option>
                 <option value="cirugía de mujeres">Cirugía de Mujeres</option>
                 <option value="clínica de vsvs">Clínica de VSVS</option>
-                <option value="cocina">Cocina</option>
                 <option value="compras">Compras</option>
                 <option value="consulta externa">Consulta Externa</option>
                 <option value="contabilidad">Contabilidad</option>
@@ -133,7 +131,8 @@
                 <option value="resguardo y vigilancia">Resguardo y Vigilancia</option>
                 <option value="sala de operaciones general">Sala de Operaciones General</option>
                 <option value="sala de operaciones materno-neonatal">Sala de Operaciones Materno-Neonatal</option>
-                <option value="secretaria ejecutiva">Secretaria Ejecutiva</option>
+                <option value="secretaría ejecutiva">Secretaría Ejecutiva</option>
+                <option value="servicio de alimentación">Servicio de Alimentación</option>
                 <option value="servicios generales">Servicios Generales</option>
                 <option value="subdirección de enfermería">Subdirección de Enfermería</option>
                 <option value="subdirección de recursos humanos">Subdirección de Recursos Humanos</option>
@@ -148,10 +147,8 @@
                 <option value="unidad de cuidados intensivos adultos b">Unidad de Cuidados Intensivos Adultos B</option>
                 <option value="unidad de cuidados intensivos neonatos">Unidad de Cuidados Intensivos Neonatos</option>
                 <option value="unidad de cuidados intensivos pediátricos">Unidad de Cuidados Intensivos Pediátricos</option>
-                <option value="unidad de información en salud y atención al usuario">
-                  Unidad de Información en Salud y Atención al Usuario
-                </option>
-                <option value="upe">Upe</option>
+                <option value="unidad de información en salud y atención al usuario">Unidad de Información en Salud y Atención al Usuario</option>
+                <option value="upe">UPE</option>
               </select>
             </div>
             </div>

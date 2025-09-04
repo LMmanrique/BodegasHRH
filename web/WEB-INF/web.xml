@@ -72,6 +72,10 @@
         <servlet-name>EditarExistenciaServlet</servlet-name>
         <servlet-class>Controlador.EditarExistenciaServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GenerarInformeExistenciasServlet</servlet-name>
+        <servlet-class>Controlador.GenerarInformeExistenciasServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -123,6 +127,10 @@
     <servlet-mapping>
         <servlet-name>EditarExistenciaServlet</servlet-name>
         <url-pattern>/EditarExistenciaServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GenerarInformeExistenciasServlet</servlet-name>
+        <url-pattern>/GenerarInformeExistenciasServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

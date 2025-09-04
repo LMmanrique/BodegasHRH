@@ -175,17 +175,27 @@
                   <span class="d-flex">
                     <iconify-icon icon="solar:checklist-linear"></iconify-icon>
                   </span>
-                  <span class="hide-menu">BRES</span>
+                  <span class="hide-menu">Generar Reportes</span>
                 </div>
               </a>
               <ul aria-expanded="false" class="collapse first-level">
                <li class="sidebar-item">
-                    <a class="sidebar-link justify-content-between" target="_blank" href="#">
+                    <a class="sidebar-link justify-content-between" target="_blank" href="generarinformeexistencias.jsp">
                       <div class="d-flex align-items-center gap-3">
                         <span class="d-flex">
                           <iconify-icon icon="solar:cloud-download-linear"></iconify-icon>
                         </span>
-                        <span class="hide-menu">Generar BRES</span>
+                        <span class="hide-menu">Informe de Existencias</span>
+                      </div>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link justify-content-between" target="_blank" href="generarinformeexistencias.jsp">
+                      <div class="d-flex align-items-center gap-3">
+                        <span class="d-flex">
+                          <iconify-icon icon="solar:cloud-download-linear"></iconify-icon>
+                        </span>
+                        <span class="hide-menu">Revisión Física de Inventario</span>
                       </div>
                     </a>
                 </li>
