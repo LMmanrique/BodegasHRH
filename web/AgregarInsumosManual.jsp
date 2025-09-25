@@ -112,7 +112,7 @@
   </div>
 
   <!-- Scripts JS -->
-  <script src="${pageContext.request.contextPath}/assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src=xassets/libs/jquery/dist/jquery.min.js"></script>
   <script src="${pageContext.request.contextPath}/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="${pageContext.request.contextPath}/assets/js/sidebarmenu.js"></script>
   <script src="${pageContext.request.contextPath}/assets/js/app.min.js"></script>

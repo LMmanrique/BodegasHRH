@@ -1,5 +1,3 @@
-
-
 <%
     // El objeto session ya está disponible en el JSP
     if (session == null || session.getAttribute("usuario") == null) {
@@ -491,6 +489,12 @@ $(function(){
       $qty.val(maxNew.toFixed(2));
     }
     recalcRow($tr);
+    updateTotalGeneral();
+  });
+
+  // ? Eliminar fila del carrito
+  $(document).on('click', '.removeRow', function(){
+    $(this).closest('tr').remove();
     updateTotalGeneral();
   });
 

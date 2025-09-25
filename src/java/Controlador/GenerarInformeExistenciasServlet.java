@@ -61,7 +61,7 @@ public class GenerarInformeExistenciasServlet extends HttpServlet {
         // ENCABEZADO IZQUIERDA
         document.add(new Paragraph("MINISTERIO DE SALUD PÚBLICA Y ASISTENCIA SOCIAL", fontTitulo));
         document.add(new Paragraph("HOSPITAL REGIONAL DE HUEHUETENANGO \"DR. JORGE VIDES MOLINA\"", fontSubtitulo));
-        document.add(new Paragraph("ALMACÉN GENERAL", fontSubtitulo));
+        //document.add(new Paragraph("ALMACÉN GENERAL", fontSubtitulo));
         document.add(new Paragraph(" "));
         
         // TÍTULO CENTRADO
