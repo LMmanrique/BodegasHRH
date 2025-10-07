@@ -200,12 +200,12 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link justify-content-between" target="_blank" href="generarinformeexistencias.jsp">
+              <a class="sidebar-link justify-content-between" target="_blank" href="informemensualinsumos.jsp">
                 <div class="d-flex align-items-center gap-3">
                   <span class="d-flex">
                     <iconify-icon icon="solar:cloud-download-linear"></iconify-icon>
                   </span>
-                  <span class="hide-menu">Revisión Física de Inventario</span>
+                  <span class="hide-menu">KARDEX</span>
                 </div>
               </a>
             </li>
